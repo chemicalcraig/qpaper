@@ -33,8 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionRemove_Paper_From_Project, SIGNAL(triggered()), this, SLOT(removePaperfromProject()));
 
     //Add paper to project from combobox
-    connect(ui->comboBox_allpapers, SIGNAL(activated(QString)), this, SLOT(addPapertoProject(QString)));
-    connect(ui->comboBox_projects, SIGNAL(activated(QString)), this, SLOT(addPapertoProjectfromBox(QString)));
+    connect(ui->comboBox_allpapers, SIGNAL(activated(int)), this, SLOT(addPapertoProject(int)));
+    connect(ui->comboBox_projects, SIGNAL(activated(QString)) , this, SLOT(addPapertoProjectfromBox(QString)));
 
     //Delete paper from entire database
     connect(ui->actionRemove_Paper_From_Database, SIGNAL(triggered()), this, SLOT(deletePaper()));
@@ -67,7 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
     papermodel = new QSqlTableModel;
     papermodel->setEditStrategy(QSqlTableModel::OnManualSubmit );
     projectmodel = new QSqlTableModel;
-    papermodel->setTable("papers");
+    //papermodel->setTable("allpapers");
     projectmodel->setTable("projects");
     papermodel->select();
     projectmodel->select();
@@ -330,7 +330,10 @@ void MainWindow::addPapertoProjectfromBox(QString str) {
 
 /* Add paper to project from All list combo box*/
 
-void MainWindow::addPapertoProject(QString str) {
+void MainWindow::addPapertoProject(int n) {
+    if (n==0)
+        return;
+    QString str = ui->comboBox_allpapers->itemText(n);
     currentprojectname = str;
     QSqlQuery query;
     QString strlist;
@@ -784,7 +787,6 @@ void MainWindow::newSubProject() {
 /* Set current project */
 
 void MainWindow::projectClicked(QModelIndex ind) {
-
     QString str = ind.data().toString();
 
     //If "All" clicked
@@ -854,8 +856,8 @@ void MainWindow::projectClicked(QModelIndex ind) {
 
             for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
                  ui->tableView_papers->setRowHidden(i,false );
-//            for (int i=0; i<14; i++)
-//                ui->tableView_papers->hideColumn(i);
+            for (int i=0; i<14; i++)
+                ui->tableView_papers->hideColumn(i);
             ui->tableView_papers->showColumn(0);
             ui->tableView_papers->showColumn(1);
             ui->tableView_papers->showColumn(2);
@@ -869,10 +871,6 @@ void MainWindow::projectClicked(QModelIndex ind) {
 }
 void MainWindow::projectClicked(QString str) {
 
-    //If "All" clicked
-//    if (str == "all") {
-//        setProjectAll();
-//    } else {
     ui->actionAdd_Paper->setEnabled(false);
         projectSet = true;
 
@@ -891,6 +889,7 @@ void MainWindow::projectClicked(QString str) {
         //update description
         query.exec("SELECT description FROM projects WHERE title='"+str+"'");
         query.first();
+
         ui->textEdit_projdescription->setText(query.value(0).toString());
 
         //Update paper view
@@ -906,25 +905,46 @@ void MainWindow::projectClicked(QString str) {
         ui->actionNew_Sub_Project->setEnabled(true);
         ui->actionDelete_Project->setEnabled(true);
 
-        //ui->tableView_papers->reset();
+        ui->tableView_papers->showColumn(0);
+        ui->tableView_papers->showColumn(1);
+        ui->tableView_papers->showColumn(2);
+        ui->tableView_papers->showColumn(3);
+        ui->tableView_papers->showColumn(5);
+        ui->tableView_papers->showColumn(7);
+        ui->tableView_papers->showColumn(8);
+//        ui->tableView_papers->reset();
 
 
+        if (!db.tables().contains(str+"papers")) {
             for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
                  ui->tableView_papers->setRowHidden(i,true );
             dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->clear();
+            ui->tableView_papers->reset();
+            for (int i=0; i<15; i++)
+                ui->tableView_papers->hideColumn(i);
+
+        } else {
+            for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
+                 ui->tableView_papers->setRowHidden(i,true );
+            //dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->clear();
             //ui->tableView_papers->reset();
 
             dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->setTable(str+"papers");
             dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->select();
-            ui->tableView_papers->reset();
 
             for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
                  ui->tableView_papers->setRowHidden(i,false );
-
-            for (int i=0; i<15; i++)
-                ui->tableView_papers->showColumn(i);
-
+            for (int i=0; i<14; i++)
+                ui->tableView_papers->hideColumn(i);
+            ui->tableView_papers->showColumn(0);
             ui->tableView_papers->showColumn(1);
+            ui->tableView_papers->showColumn(2);
+            ui->tableView_papers->showColumn(3);
+            ui->tableView_papers->showColumn(5);
+            ui->tableView_papers->showColumn(7);
+            ui->tableView_papers->showColumn(8);
+
+        }
 }
 
 void MainWindow::setProjectAll() {

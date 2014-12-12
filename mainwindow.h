@@ -75,7 +75,7 @@ public slots:
     void paperClicked(QModelIndex ind); //clicked on paper
     void removePaperfromProject(); //Remove paper
     void deletePaper(); //Delete paper from db
-    void addPapertoProject(QString str); //Add paper to project from combobox_allpapers
+    void addPapertoProject(int n); //Add paper to project from combobox_allpapers
     void addPapertoProjectfromBox(QString str); //Add paper to project from combobox_projects
     void paperDataChanged(QModelIndex ind1, QModelIndex ind2); //paper entry changed in table view
     void printProjectBibtex();  //print project bibtex

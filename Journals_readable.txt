@@ -72,3 +72,6 @@ PRSLA = Proc. R. Soc. Lond. A
 J. Phys. Soc. Japan = JPSJ
 JPSJ = J. Phys. Soc. Japan
 AJP = Am. J. Phys.
+JAP = J. Appl. Phys.
+NC = Nature Chemistry
+NP = Nature Photonics

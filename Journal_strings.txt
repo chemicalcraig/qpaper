@@ -72,3 +72,6 @@
 @string{J. Phys. Soc. Japan={JPSJ}}
 @string{JPSJ={J. Phys. Soc. Japan}}
 @string{AJP={Am. J. Phys.}}
+@string{JAP={J. Appl. Phys.}}
+@string{NC={Nature Chemistry}}
+@string{NP={Nature Photonics}}
