@@ -75,3 +75,7 @@
 @string{JAP={J. Appl. Phys.}}
 @string{NC={Nature Chemistry}}
 @string{NP={Nature Photonics}}
+@string{SSS={Solid State Sciences}}
+@string{JCCryst={J. Chem. Cryst.}}
+@string{ProcUltrafast={Proceedings of the 15th International Conference on Ultrafast Phenomena}}
+@string{ProcUltrafast17={Proceedings of the 17th International Conference on Ultrafast Phenomena}}

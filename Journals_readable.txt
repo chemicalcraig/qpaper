@@ -75,3 +75,7 @@ AJP = Am. J. Phys.
 JAP = J. Appl. Phys.
 NC = Nature Chemistry
 NP = Nature Photonics
+SSS = Solid State Sciences
+JCCryst = J. Chem. Cryst.
+ProcUltrafast = Proceedings of the 15th International Conference on Ultrafast Phenomena
+ProcUltrafast17 = Proceedings of the 17th International Conference on Ultrafast Phenomena

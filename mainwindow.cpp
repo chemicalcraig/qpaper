@@ -165,6 +165,13 @@ void MainWindow::showJournalAbbv() {
     qDebug()<<j->selectedJournal;
 }
 
+QString MainWindow::getJournal(QString j, QByteArray all) {
+    if (all.contains(j.toAscii())) {
+        int here = all.indexOf(j.toAscii());
+        qDebug()<<"string starts at "<<here<<" and ends at "<<all.lastIndexOf(j);
+    }
+}
+
 /* print project bibtex */
 void MainWindow::printProjectBibtex() {
     QString title,authors,journal,volume,pages,issue,year,notes,lastauthor,bkey;
@@ -191,26 +198,27 @@ void MainWindow::printProjectBibtex() {
 
     while (query.next()) {
         /* get last author's last name */
-        lastauthor = getLastAuthor(query.value(1).toString());
+        lastauthor = getLastAuthor(query.value(2).toString());
         //*  title
-        title = query.value(0).toString();
+        title = query.value(1).toString();
         //*  authors
-        authors = formatAuthorList(query.value(1).toString());
+        authors = formatAuthorList(query.value(2).toString());
         //*  journal
-        journal = query.value(2).toString();
+        journal = query.value(3).toString();
+        getJournal(journal,ar);
         //*  volume
-        volume = query.value(3).toString();
+        volume = query.value(4).toString();
         //*  pages
-        pages = query.value(4).toString();
+        pages = query.value(5).toString();
         //*  issue
-        issue = query.value(5).toString();
+        issue = query.value(6).toString();
         //*  year
-        year = query.value(6).toString();
+        year = query.value(7).toString();
         //*  notes
-        notes = query.value(7).toString();
+        notes = query.value(8).toString();
 
         /* Format Bibtex key */
-        bkey = formatBibKey(lastauthor,year,pages);
+        bkey = query.value(0).toString();//formatBibKey(lastauthor,year,pages);
 
         /* Write things to the file */
         //ar.clear();
@@ -223,12 +231,10 @@ void MainWindow::printProjectBibtex() {
         ar+="  Title = {"+title+"},\n";
         ar+="  Volume = {"+volume+"},\n";
         ar+="  Year = {"+year+"}}\n";
-
     }
     res2.write(ar);
     res2.close();
     res.close();
-
 }
 
 /* Format bibtex key */
@@ -856,7 +862,7 @@ void MainWindow::projectClicked(QModelIndex ind) {
 
             for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
                  ui->tableView_papers->setRowHidden(i,false );
-            for (int i=0; i<14; i++)
+            for (int i=0; i<15; i++)
                 ui->tableView_papers->hideColumn(i);
             ui->tableView_papers->showColumn(0);
             ui->tableView_papers->showColumn(1);
@@ -915,7 +921,8 @@ void MainWindow::projectClicked(QString str) {
 //        ui->tableView_papers->reset();
 
 
-        if (!db.tables().contains(str+"papers")) {
+        QString str2 = str+"papers";
+        if (!db.tables().contains(str2)) {
             for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
                  ui->tableView_papers->setRowHidden(i,true );
             dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->clear();
@@ -927,10 +934,12 @@ void MainWindow::projectClicked(QString str) {
             for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
                  ui->tableView_papers->setRowHidden(i,true );
             //dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->clear();
-            //ui->tableView_papers->reset();
+            ui->tableView_papers->reset();
 
-            dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->setTable(str+"papers");
+
+            dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->setTable(str2);
             dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->select();
+            qDebug()<<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->lastError()<<"table name";
 
             for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
                  ui->tableView_papers->setRowHidden(i,false );
