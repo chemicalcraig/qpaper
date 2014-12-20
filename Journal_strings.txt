@@ -69,7 +69,6 @@
 @string{ZN={Z. Naturforsch.}}
 @string{Proc. R. Soc. Lond. A={PRSLA}}
 @string{PRSLA={Proc. R. Soc. Lond. A}}
-@string{J. Phys. Soc. Japan={JPSJ}}
 @string{JPSJ={J. Phys. Soc. Japan}}
 @string{AJP={Am. J. Phys.}}
 @string{JAP={J. Appl. Phys.}}
@@ -77,5 +76,5 @@
 @string{NP={Nature Photonics}}
 @string{SSS={Solid State Sciences}}
 @string{JCCryst={J. Chem. Cryst.}}
-@string{ProcUltrafast={Proceedings of the 15th International Conference on Ultrafast Phenomena}}
-@string{ProcUltrafast17={Proceedings of the 17th International Conference on Ultrafast Phenomena}}
+@string{ProcUltrafast={Ultrafast Phenomena XV}}
+@string{ProcUltrafast17={Ultrafast Phenomena XVII}}
