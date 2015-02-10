@@ -69,6 +69,7 @@ ZPB = Z. Phys. B
 ZN = Z. Naturforsch.
 Proc. R. Soc. Lond. A = PRSLA
 PRSLA = Proc. R. Soc. Lond. A
+J. Phys. Soc. Japan = JPSJ
 JPSJ = J. Phys. Soc. Japan
 AJP = Am. J. Phys.
 JAP = J. Appl. Phys.
@@ -76,7 +77,6 @@ NC = Nature Chemistry
 NP = Nature Photonics
 SSS = Solid State Sciences
 JCCryst = J. Chem. Cryst.
-<<<<<<< HEAD
 ProcUltrafast = Proceedings of the 15th International Conference on Ultrafast Phenomena
 ProcUltrafast17 = Proceedings of the 17th International Conference on Ultrafast Phenomena
 SSR = Surf. Sci. Rep.
@@ -87,7 +87,3 @@ NPh = Nature Phys.
 NMat = Nature Mater.
 PRSA = Proc. R. Soc. A
 SM = Soft Matter
-=======
-ProcUltrafast = Ultrafast Phenomena XV
-ProcUltrafast17 = Ultrafast Phenomena XVII
->>>>>>> 6074091bea0b8fc763b288682573f9f90ebf1d37
