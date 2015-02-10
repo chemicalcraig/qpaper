@@ -51,7 +51,7 @@ public:
     QString getLastAuthor(QString str); //get last author on paper
     QString formatAuthorList(QString str); //format author list
     QString formatBibKey(QString auth, QString year, QString pg); //format bibtex key
-    QString getJournal(QString j, QByteArray all); //get journal abbreviation from accronym
+    QString getJournal(QString j, QFile *res); //get journal abbreviation from accronym
 
     void paperAccepted(NewPaper *newpaper);
 
