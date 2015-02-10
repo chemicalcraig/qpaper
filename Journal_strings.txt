@@ -79,3 +79,11 @@
 @string{JCCryst={J. Chem. Cryst.}}
 @string{ProcUltrafast={Proceedings of the 15th International Conference on Ultrafast Phenomena}}
 @string{ProcUltrafast17={Proceedings of the 17th International Conference on Ultrafast Phenomena}}
+@string{SSR={Surf. Sci. Rep.}}
+@string{AMI={Appl. Mater. Interfaces}}
+@string{PA={Physica A}}
+@string{NPH={Nat. Phys.}}
+@string{NPh={Nature Phys.}}
+@string{NMat={Nature Mater.}}
+@string{PRSA={Proc. R. Soc. A}}
+@string{SM={Soft Matter}}
