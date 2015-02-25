@@ -25,7 +25,9 @@ public:
     QString generateKey(QString auth, QString year, QString pg);
     QString pdf;
     Ui::NewPaper *ui;
-    void setFields(QString title, QString auth, QString journal, QString volume, QString pages, QString issue, QString year, QString notes, QString pdfpath);
+    void setFields(QString key, QString title, QString auth, QString journal,
+                   QString volume, QString pages, QString issue, QString year,
+                   QString notes, QString pdfpath);
 
 private:
 

@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newpaper.ui'
 **
-** Created: Sun Sep 28 00:08:34 2014
-**      by: Qt User Interface Compiler version 4.8.3
+** Created by: Qt User Interface Compiler version 4.8.6
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -29,30 +28,30 @@ class Ui_NewPaper
 {
 public:
     QGridLayout *gridLayout;
+    QLineEdit *lineEdit_title;
+    QLabel *label_2;
+    QLabel *label_4;
+    QLineEdit *lineEdit_journal;
+    QLineEdit *lineEdit_authors;
     QLabel *label_5;
     QLineEdit *lineEdit_pages;
     QLabel *label;
-    QLineEdit *lineEdit_title;
-    QLabel *label_2;
-    QLineEdit *lineEdit_authors;
     QHBoxLayout *horizontalLayout;
     QLabel *label_3;
     QPushButton *pushButton;
-    QLineEdit *lineEdit_journal;
-    QLabel *label_4;
     QLineEdit *lineEdit_volume;
     QLineEdit *lineEdit_issue;
     QLabel *label_6;
     QLabel *label_7;
     QLineEdit *lineEdit_year;
     QLineEdit *lineEdit_publisher;
-    QLabel *label_8;
     QLabel *label_9;
+    QLabel *label_8;
     QLineEdit *lineEdit_keywords;
     QDialogButtonBox *buttonBox;
-    QLabel *label_10;
-    QLabel *label_key;
     QPushButton *pushButton_addPdf;
+    QLineEdit *lineEdit_key;
+    QLabel *label_10;
 
     void setupUi(QDialog *NewPaper)
     {
@@ -65,6 +64,31 @@ public:
         NewPaper->setModal(true);
         gridLayout = new QGridLayout(NewPaper);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        lineEdit_title = new QLineEdit(NewPaper);
+        lineEdit_title->setObjectName(QString::fromUtf8("lineEdit_title"));
+
+        gridLayout->addWidget(lineEdit_title, 0, 1, 1, 1);
+
+        label_2 = new QLabel(NewPaper);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        gridLayout->addWidget(label_2, 1, 0, 1, 1);
+
+        label_4 = new QLabel(NewPaper);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        gridLayout->addWidget(label_4, 3, 0, 1, 1);
+
+        lineEdit_journal = new QLineEdit(NewPaper);
+        lineEdit_journal->setObjectName(QString::fromUtf8("lineEdit_journal"));
+
+        gridLayout->addWidget(lineEdit_journal, 2, 1, 1, 1);
+
+        lineEdit_authors = new QLineEdit(NewPaper);
+        lineEdit_authors->setObjectName(QString::fromUtf8("lineEdit_authors"));
+
+        gridLayout->addWidget(lineEdit_authors, 1, 1, 1, 1);
+
         label_5 = new QLabel(NewPaper);
         label_5->setObjectName(QString::fromUtf8("label_5"));
 
@@ -80,21 +104,6 @@ public:
 
         gridLayout->addWidget(label, 0, 0, 1, 1);
 
-        lineEdit_title = new QLineEdit(NewPaper);
-        lineEdit_title->setObjectName(QString::fromUtf8("lineEdit_title"));
-
-        gridLayout->addWidget(lineEdit_title, 0, 1, 1, 1);
-
-        label_2 = new QLabel(NewPaper);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-
-        gridLayout->addWidget(label_2, 1, 0, 1, 1);
-
-        lineEdit_authors = new QLineEdit(NewPaper);
-        lineEdit_authors->setObjectName(QString::fromUtf8("lineEdit_authors"));
-
-        gridLayout->addWidget(lineEdit_authors, 1, 1, 1, 1);
-
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         label_3 = new QLabel(NewPaper);
@@ -109,16 +118,6 @@ public:
 
 
         gridLayout->addLayout(horizontalLayout, 2, 0, 1, 1);
-
-        lineEdit_journal = new QLineEdit(NewPaper);
-        lineEdit_journal->setObjectName(QString::fromUtf8("lineEdit_journal"));
-
-        gridLayout->addWidget(lineEdit_journal, 2, 1, 1, 1);
-
-        label_4 = new QLabel(NewPaper);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-
-        gridLayout->addWidget(label_4, 3, 0, 1, 1);
 
         lineEdit_volume = new QLineEdit(NewPaper);
         lineEdit_volume->setObjectName(QString::fromUtf8("lineEdit_volume"));
@@ -150,15 +149,15 @@ public:
 
         gridLayout->addWidget(lineEdit_publisher, 7, 1, 1, 1);
 
-        label_8 = new QLabel(NewPaper);
-        label_8->setObjectName(QString::fromUtf8("label_8"));
-
-        gridLayout->addWidget(label_8, 7, 0, 1, 1);
-
         label_9 = new QLabel(NewPaper);
         label_9->setObjectName(QString::fromUtf8("label_9"));
 
         gridLayout->addWidget(label_9, 8, 0, 1, 1);
+
+        label_8 = new QLabel(NewPaper);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+
+        gridLayout->addWidget(label_8, 7, 0, 1, 1);
 
         lineEdit_keywords = new QLineEdit(NewPaper);
         lineEdit_keywords->setObjectName(QString::fromUtf8("lineEdit_keywords"));
@@ -172,20 +171,20 @@ public:
 
         gridLayout->addWidget(buttonBox, 11, 0, 1, 2);
 
-        label_10 = new QLabel(NewPaper);
-        label_10->setObjectName(QString::fromUtf8("label_10"));
-
-        gridLayout->addWidget(label_10, 10, 0, 1, 1);
-
-        label_key = new QLabel(NewPaper);
-        label_key->setObjectName(QString::fromUtf8("label_key"));
-
-        gridLayout->addWidget(label_key, 10, 1, 1, 1);
-
         pushButton_addPdf = new QPushButton(NewPaper);
         pushButton_addPdf->setObjectName(QString::fromUtf8("pushButton_addPdf"));
 
         gridLayout->addWidget(pushButton_addPdf, 9, 1, 1, 1);
+
+        lineEdit_key = new QLineEdit(NewPaper);
+        lineEdit_key->setObjectName(QString::fromUtf8("lineEdit_key"));
+
+        gridLayout->addWidget(lineEdit_key, 10, 1, 1, 1);
+
+        label_10 = new QLabel(NewPaper);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+
+        gridLayout->addWidget(label_10, 10, 0, 1, 1);
 
         QWidget::setTabOrder(lineEdit_title, lineEdit_authors);
         QWidget::setTabOrder(lineEdit_authors, pushButton);
@@ -209,19 +208,18 @@ public:
     void retranslateUi(QDialog *NewPaper)
     {
         NewPaper->setWindowTitle(QApplication::translate("NewPaper", "Add a New Paper", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("NewPaper", "Authors (separated by ';'):", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("NewPaper", "Volume:", 0, QApplication::UnicodeUTF8));
         label_5->setText(QApplication::translate("NewPaper", "Issue:", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("NewPaper", "Title:", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("NewPaper", "Authors (separated by ';'):", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("NewPaper", "Journal:", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("NewPaper", "acronyms", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QApplication::translate("NewPaper", "Volume:", 0, QApplication::UnicodeUTF8));
         label_6->setText(QApplication::translate("NewPaper", "Pages:", 0, QApplication::UnicodeUTF8));
         label_7->setText(QApplication::translate("NewPaper", "Year:", 0, QApplication::UnicodeUTF8));
-        label_8->setText(QApplication::translate("NewPaper", "Publisher:", 0, QApplication::UnicodeUTF8));
         label_9->setText(QApplication::translate("NewPaper", "Notes:", 0, QApplication::UnicodeUTF8));
-        label_10->setText(QApplication::translate("NewPaper", "BibTex Key:", 0, QApplication::UnicodeUTF8));
-        label_key->setText(QString());
+        label_8->setText(QApplication::translate("NewPaper", "Publisher:", 0, QApplication::UnicodeUTF8));
         pushButton_addPdf->setText(QApplication::translate("NewPaper", "Add PDF", 0, QApplication::UnicodeUTF8));
+        label_10->setText(QApplication::translate("NewPaper", "BibTex Key:", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

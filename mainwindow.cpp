@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionRemove_Paper_From_Project, SIGNAL(triggered()), this, SLOT(removePaperfromProject()));
 
     //Add paper to project from combobox
-    connect(ui->comboBox_allpapers, SIGNAL(activated(int)), this, SLOT(addPapertoProject(int)));
+    connect(ui->comboBox_allpapers, SIGNAL(activated(int)), this, SLOT(addPaperstoProject(int)));
     connect(ui->comboBox_projects, SIGNAL(activated(QString)) , this, SLOT(addPapertoProjectfromBox(QString)));
 
     //Delete paper from entire database
@@ -73,6 +73,8 @@ MainWindow::MainWindow(QWidget *parent) :
     projectmodel->select();
     ui->treeView_projects->setHeaderHidden(true);
     ui->tableView_papers->setModel(papermodel);
+    ui->tableView_papers->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    ui->tableView_papers->setSelectionBehavior(QAbstractItemView::SelectRows);
     initializeProjectData();
     initializePaperList();
     ui->treeView_projects->setModel(&mainprojectmodel);
@@ -122,7 +124,7 @@ void MainWindow::editPaper() {
 
     query.exec("Select title, author, journal, volume, pages, issue, year, notes, pdfpath from '"+currentprojectname+"papers' where bibkey = '"+currentpaperkey+"'");
     while (query.next()) {
-        np->setFields(query.value(0).toString(),query.value(1).toString(),
+        np->setFields(currentpaperkey,query.value(0).toString(),query.value(1).toString(),
                       query.value(2).toString(),query.value(3).toString(),
                       query.value(4).toString(),query.value(5).toString(),
                       query.value(6).toString(),query.value(7).toString(),
@@ -136,12 +138,10 @@ void MainWindow::editPaper() {
         int row = ind.row();
         QSqlRecord rec;
         rec = dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->record(row);
-        qDebug()<<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount();
 
         QSqlQuery query2;
         query2.exec("Update '"+currentprojectname+"papers' set title='"+np->title+"' where bibkey = '"+currentpaperkey+"'");
         query2.exec("Update '"+currentprojectname+"papers' set author='"+np->authors+"' where bibkey = '"+currentpaperkey+"'");
-        qDebug()<<query2.lastError()<<query2.lastQuery();
         query2.exec("Update '"+currentprojectname+"papers' set journal='"+np->journal+"' where bibkey = '"+currentpaperkey+"'");
         query2.exec("Update '"+currentprojectname+"papers' set volume='"+np->volume+"' where bibkey = '"+currentpaperkey+"'");
         query2.exec("Update '"+currentprojectname+"papers' set pages='"+np->pages+"' where bibkey = '"+currentpaperkey+"'");
@@ -152,11 +152,9 @@ void MainWindow::editPaper() {
         query2.exec("Update '"+currentprojectname+"papers' set bibkey='"+np->key+"' where bibkey = '"+currentpaperkey+"'");
 
         for (int i=0; i<np->allFields.length(); i++) {
-            qDebug()<<i<<QVariant(np->allFields.at(i));
             rec.setValue(i,QVariant(np->allFields.at(i)));
         }
 
-        qDebug()<<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount();
         //dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->setRecord(row,rec);
         //dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->submitAll();
         //dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->setTable(currentprojectname+"papers");
@@ -205,7 +203,6 @@ void MainWindow::showJournalAbbv() {
 
 QString MainWindow::getJournal(QString j, QFile *res) {
     QString str;
-    QString fname = res->fileName();
     ifstream infile;
     infile.open(res->fileName().toAscii());
     string s;
@@ -214,9 +211,10 @@ QString MainWindow::getJournal(QString j, QFile *res) {
     while (!infile.eof()) {
         infile.getline(tempc,1000);
         s = strtok(tempc,"{=");
-
         s = strtok(NULL,"{=");
         str=s.c_str();
+        if (j.endsWith(' '))
+            j.chop(1);
         str.remove('"');
 
         if (j==str) {
@@ -232,10 +230,11 @@ QString MainWindow::getJournal(QString j, QFile *res) {
 void MainWindow::printProjectBibtex() {
     QString title,authors,journal,volume,pages,issue,year,notes,lastauthor,bkey;
     ofstream outfile;
-    QString bibfilestring = currentprojectname;
-    bibfilestring+=".bib";
+    QString bibfilestring = QFileDialog::getSaveFileName (this,
+                                                         tr("Export Bib file"), "", tr("Bib Files (*.bib)"));//currentprojectname;
+    if (!bibfilestring.endsWith(".bib"))
+        bibfilestring+=".bib";
     outfile.open(bibfilestring.toUtf8().constData() );
-
     /* Write Journal Strings */
 
     /* Write paper entries */
@@ -248,7 +247,6 @@ void MainWindow::printProjectBibtex() {
     res2.remove();
     res2.open(QIODevice::WriteOnly|QIODevice::Text);
    // res2.write(ar);
-
     /* Now the papers */
     QSqlQuery query;
     query.exec("SELECT * from '"+currentprojectname+"papers'" );
@@ -263,6 +261,7 @@ void MainWindow::printProjectBibtex() {
         //*  journal
         journal = query.value(3).toString();
         QString s = getJournal(journal,&res);
+
         //*  volume
         volume = query.value(4).toString();
         //*  pages
@@ -276,7 +275,6 @@ void MainWindow::printProjectBibtex() {
 
         /* Format Bibtex key */
         bkey = query.value(0).toString();//formatBibKey(lastauthor,year,pages);
-
         /* Write things to the file */
         //ar.clear();
         ar+="\n";
@@ -391,29 +389,44 @@ void MainWindow::addPapertoProjectfromBox(QString str) {
     projectClicked(currentprojectname);
 }
 
+/* Add papers to project from All list combo box*/
+void MainWindow::addPaperstoProject(int nproj) {
+    QItemSelectionModel *select = ui->tableView_papers->selectionModel();
+    QString str = ui->comboBox_allpapers->itemText(nproj);
+    if (!select->hasSelection())
+        return;
+    QModelIndexList list = select->selectedRows();
+    for (int i=0; i<list.count(); i++) {
+        paperClicked(list.at(i),true);
+        addPapertoProject(nproj,str);
+    }
+    projectClicked(str);
+}
+
 /* Add paper to project from All list combo box*/
 
-void MainWindow::addPapertoProject(int n) {
+void MainWindow::addPapertoProject(int n,QString proj) {
     if (n==0)
         return;
-    QString str = ui->comboBox_allpapers->itemText(n);
-    currentprojectname = str;
+    //QString str = ui->comboBox_allpapers->itemText(n);
+    //currentprojectname = str;
     QSqlQuery query;
     QString strlist;
-    query.exec("SELECT id FROM projects WHERE title='"+str+"'");
+    query.exec("SELECT id FROM projects WHERE title='"+proj+"'");
     query.first();
     int id = query.value(0).toInt();
+
     strlist = getProjectsfromPaper(currentpapername);
     strlist += QString::number(id)+";";
 
     query.exec("Update allpapers SET projectid='"+strlist+"' where title='"+currentpapername+"'");
 
-    query.exec("DROP TABLE '"+str+"papers'");
-    query.exec("CREATE TABLE '"+str+"papers' AS SELECT bibkey, title, author, journal, volume, pages, issue, year, notes, pdfpath from allpapers WHERE projectid like '%;"+QString::number(id)+";%'");
+    query.exec("DROP TABLE '"+proj+"papers'");
+    query.exec("CREATE TABLE '"+proj+"papers' AS SELECT bibkey, title, author, journal, volume, pages, issue, year, notes, pdfpath from allpapers WHERE projectid like '%;"+QString::number(id)+";%'");
 //    dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->setTable(str+"papers");
 //    dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->select();
 
-    projectClicked(str);
+    //projectClicked(str);
 
 }
 
@@ -483,6 +496,39 @@ void MainWindow::paperClicked(QModelIndex in) {
 
     }
 }
+
+/* Click on paper, overridden for multiple selections */
+void MainWindow::paperClicked(QModelIndex in, bool mult) {
+    paperSet = true;
+    QModelIndex ind2,keyind;
+    QSqlQuery query;
+
+    if (currentprojectname == "all") {
+        ui->comboBox_allpapers->setEnabled(true);
+        ui->comboBox_allpapers->setHidden(false);
+        ind2 = in.model()->index(in.row(),4,QModelIndex());
+        keyind = in.model()->index(in.row(),3,QModelIndex());
+    } else {
+        ind2 = in.model()->index(in.row(),1,QModelIndex());
+        keyind = in.model()->index(in.row(),0,QModelIndex());
+
+    }
+
+    currentpapername = ind2.data().toString();
+    currentpaperkey = keyind.data().toString();
+    query.exec("SELECT notes from allpapers where bibkey='"+currentpaperkey+"'");
+    query.first();
+    ui->textEdit_paperNotes->setText(query.value(0).toString());
+
+
+    //If in All Projects, populate combo box
+    if (currentprojectname == "all") {
+        ui->comboBox_allpapers->setItemText(0,"<-- Add "+currentpaperkey+" to a Project -->");
+    } else {
+
+    }
+}
+
 
 /* Change name of project */
 void MainWindow::projectEntryChanged(){

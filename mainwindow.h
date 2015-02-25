@@ -75,9 +75,13 @@ public slots:
     void addNewPaper();
     void projectEntryChanged(); //change project name
     void paperClicked(QModelIndex ind); //clicked on paper
+    void paperClicked(QModelIndex ind,bool mult); //clicked on paper
+
     void removePaperfromProject(); //Remove paper
     void deletePaper(); //Delete paper from db
-    void addPapertoProject(int n); //Add paper to project from combobox_allpapers
+    void addPaperstoProject(int nproj);
+    //void addPapertoProject(int n); //Add paper to project from combobox_allpapers
+    void addPapertoProject(int n,QString str); //Add paper to project from combobox_allpapers
     void addPapertoProjectfromBox(QString str); //Add paper to project from combobox_projects
     void paperDataChanged(QModelIndex ind1, QModelIndex ind2); //paper entry changed in table view
     void printProjectBibtex();  //print project bibtex

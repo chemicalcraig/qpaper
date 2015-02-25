@@ -87,3 +87,6 @@ NPh = Nature Phys.
 NMat = Nature Mater.
 PRSA = Proc. R. Soc. A
 SM = Soft Matter
+APhL = Appl. Phys. Lett.
+ADP = Annalen der Physik
+AdP = Ann. Phys. (Berlin)

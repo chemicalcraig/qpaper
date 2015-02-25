@@ -87,3 +87,6 @@
 @string{NMat={Nature Mater.}}
 @string{PRSA={Proc. R. Soc. A}}
 @string{SM={Soft Matter}}
+@string{APhL={Appl. Phys. Lett.}}
+@string{ADP={Annalen der Physik}}
+@string{AdP={Ann. Phys. (Berlin)}}

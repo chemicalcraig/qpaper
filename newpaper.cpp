@@ -25,7 +25,7 @@ NewPaper::~NewPaper()
  *******************************************/
 
 /* Edit paper */
-void NewPaper::setFields(QString title, QString auth, QString journal, QString volume, QString pages, QString issue, QString year, QString notes, QString pdfpath) {
+void NewPaper::setFields(QString key,QString title, QString auth, QString journal, QString volume, QString pages, QString issue, QString year, QString notes, QString pdfpath) {
     ui->lineEdit_title->setText(title);
     ui->lineEdit_authors->setText(auth);
     ui->lineEdit_journal->setText(journal);
@@ -34,8 +34,8 @@ void NewPaper::setFields(QString title, QString auth, QString journal, QString v
     ui->lineEdit_issue->setText(issue);
     ui->lineEdit_year->setText(year);
     ui->lineEdit_keywords->setText(notes);
+    ui->lineEdit_key->setText(key);
     this->pdf = pdfpath;
-
 }
 
 /* Attach a pdf to the paper entry */
@@ -69,7 +69,7 @@ void NewPaper::entryChanged(QString str) {
     this->key = generateKey(auth,year,pg);
 
     /* update label */
-    ui->label_key->setText(this->key);
+    ui->lineEdit_key->setText(this->key);
 }
 
 /* Generate BibKey */
@@ -94,6 +94,7 @@ void NewPaper::okClicked() {
     this->pages = ui->lineEdit_pages->text();
     this->journal = ui->lineEdit_journal->text();
     this->publisher = ui->lineEdit_publisher->text();
+    this->key = ui->lineEdit_key->text();
 
     allFields<<this->key<<this->title<<this->authors<<this->journal
                <<this->volume<<this->pages<<this->issue<<this->year<<this->notes
