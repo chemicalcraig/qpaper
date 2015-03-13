@@ -90,3 +90,4 @@
 @string{APhL={Appl. Phys. Lett.}}
 @string{ADP={Annalen der Physik}}
 @string{AdP={Ann. Phys. (Berlin)}}
+@string{PMS={Prog. Mater. Sci.}}

@@ -155,13 +155,14 @@ void MainWindow::editPaper() {
             rec.setValue(i,QVariant(np->allFields.at(i)));
         }
 
-        //dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->setRecord(row,rec);
-        //dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->submitAll();
-        //dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->setTable(currentprojectname+"papers");
-        if (currentprojectname == "all")
+        if (currentprojectname == "all") {
+            //get a list of all the projects the changed paper is a part of
+            QSqlQuery query3;
+            //Squery3.exec("select ");
+            //update each entry in each table
             setProjectAll();
             //edit paper list
-        else {
+        } else {
             //update the allpapers db
             query2.exec("Update 'allpapers' set title='"+np->title+"' where bibkey = '"+currentpaperkey+"'");
             query2.exec("Update 'allpapers' set author='"+np->authors+"' where bibkey = '"+currentpaperkey+"'");
@@ -306,9 +307,20 @@ QString MainWindow::formatAuthorList(QString str) {
     //Get first and last names
     for (int i=0; i<list.length(); i++) {
         QStringList list2 = list.at(i).split(" ");
+        if (list2.last()=="Jr.") {
+            ret += "{";
+            ret += list2.at(list2.length()-2);
+            ret += " ";
+            ret += list2.at(list2.length()-1);
+            ret+="}, ";
+            for (int j=0; j<list2.length()-2; j++) {
+                ret += list2.at(j)+" ";
+            }
+        } else {
         ret += list2.last()+", ";
         for (int j=0; j<list2.length()-1; j++) {
             ret += list2.at(j)+" ";
+        }
         }
         if (i<list.length()-1)
             ret += "and ";
