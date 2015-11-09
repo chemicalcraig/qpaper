@@ -22,7 +22,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      21,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -30,34 +30,36 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      12,   11,   11,   11, 0x0a,
-      25,   11,   11,   11, 0x0a,
-      41,   11,   11,   11, 0x0a,
-      56,   52,   11,   11, 0x0a,
-      88,   84,   11,   11, 0x0a,
-     112,   11,   11,   11, 0x0a,
-     128,   11,   11,   11, 0x0a,
-     142,   11,   11,   11, 0x0a,
-     164,   52,   11,   11, 0x0a,
-     199,  190,   11,   11, 0x0a,
-     230,   11,   11,   11, 0x0a,
-     255,   11,   11,   11, 0x0a,
-     275,  269,   11,   11, 0x0a,
-     305,  299,   11,   11, 0x0a,
-     336,   84,   11,   11, 0x0a,
-     380,  370,   11,   11, 0x0a,
-     422,   11,   11,   11, 0x0a,
-     443,   11,   11,   11, 0x0a,
-     461,   11,   11,   11, 0x0a,
-     473,   11,   11,   11, 0x0a,
+      16,   12,   11,   11, 0x0a,
+      43,   11,   11,   11, 0x0a,
+      56,   11,   11,   11, 0x0a,
+      72,   11,   11,   11, 0x0a,
+      83,   12,   11,   11, 0x0a,
+     115,  111,   11,   11, 0x0a,
+     139,   11,   11,   11, 0x0a,
+     155,   11,   11,   11, 0x0a,
+     169,   11,   11,   11, 0x0a,
+     191,   12,   11,   11, 0x0a,
+     226,  217,   11,   11, 0x0a,
+     257,   11,   11,   11, 0x0a,
+     282,   11,   11,   11, 0x0a,
+     302,  296,   11,   11, 0x0a,
+     332,  326,   11,   11, 0x0a,
+     363,  111,   11,   11, 0x0a,
+     407,  397,   11,   11, 0x0a,
+     449,   11,   11,   11, 0x0a,
+     470,   11,   11,   11, 0x0a,
+     488,   11,   11,   11, 0x0a,
+     500,   11,   11,   11, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0newProject()\0newSubProject()\0"
-    "newPaper()\0ind\0projectClicked(QModelIndex)\0"
-    "str\0projectClicked(QString)\0deleteProject()\0"
+    "MainWindow\0\0ind\0headerClicked(QModelIndex)\0"
+    "newProject()\0newSubProject()\0newPaper()\0"
+    "projectClicked(QModelIndex)\0str\0"
+    "projectClicked(QString)\0deleteProject()\0"
     "addNewPaper()\0projectEntryChanged()\0"
     "paperClicked(QModelIndex)\0ind,mult\0"
     "paperClicked(QModelIndex,bool)\0"
@@ -76,26 +78,27 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
-        case 0: _t->newProject(); break;
-        case 1: _t->newSubProject(); break;
-        case 2: _t->newPaper(); break;
-        case 3: _t->projectClicked((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
-        case 4: _t->projectClicked((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 5: _t->deleteProject(); break;
-        case 6: _t->addNewPaper(); break;
-        case 7: _t->projectEntryChanged(); break;
-        case 8: _t->paperClicked((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
-        case 9: _t->paperClicked((*reinterpret_cast< QModelIndex(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 10: _t->removePaperfromProject(); break;
-        case 11: _t->deletePaper(); break;
-        case 12: _t->addPaperstoProject((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 13: _t->addPapertoProject((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 14: _t->addPapertoProjectfromBox((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 15: _t->paperDataChanged((*reinterpret_cast< QModelIndex(*)>(_a[1])),(*reinterpret_cast< QModelIndex(*)>(_a[2]))); break;
-        case 16: _t->printProjectBibtex(); break;
-        case 17: _t->showJournalAbbv(); break;
-        case 18: _t->openPaper(); break;
-        case 19: _t->editPaper(); break;
+        case 0: _t->headerClicked((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
+        case 1: _t->newProject(); break;
+        case 2: _t->newSubProject(); break;
+        case 3: _t->newPaper(); break;
+        case 4: _t->projectClicked((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
+        case 5: _t->projectClicked((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 6: _t->deleteProject(); break;
+        case 7: _t->addNewPaper(); break;
+        case 8: _t->projectEntryChanged(); break;
+        case 9: _t->paperClicked((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
+        case 10: _t->paperClicked((*reinterpret_cast< QModelIndex(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 11: _t->removePaperfromProject(); break;
+        case 12: _t->deletePaper(); break;
+        case 13: _t->addPaperstoProject((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 14: _t->addPapertoProject((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 15: _t->addPapertoProjectfromBox((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 16: _t->paperDataChanged((*reinterpret_cast< QModelIndex(*)>(_a[1])),(*reinterpret_cast< QModelIndex(*)>(_a[2]))); break;
+        case 17: _t->printProjectBibtex(); break;
+        case 18: _t->showJournalAbbv(); break;
+        case 19: _t->openPaper(); break;
+        case 20: _t->editPaper(); break;
         default: ;
         }
     }
@@ -133,9 +136,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 21)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 21;
     }
     return _id;
 }

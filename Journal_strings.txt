@@ -91,3 +91,10 @@
 @string{ADP={Annalen der Physik}}
 @string{AdP={Ann. Phys. (Berlin)}}
 @string{PMS={Prog. Mater. Sci.}}
+@string{MME={Macromol. Mater. Eng.}}
+@string{CST={Compos. Sci. Technol.}}
+@string{PSSA={Polym. Sci. Ser. A}}
+@string{NCOM={Nat. Commun.}}
+@string{PPSC={Part. Part. Syst. Charact.}}
+@string{PE={Physica E}}
+@string{JTA={J. Thermal Anal.}}

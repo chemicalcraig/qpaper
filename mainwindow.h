@@ -48,6 +48,8 @@ public:
     QStringList parseAuthors(QString str);
     //get all projects a paper belongs to
     QString getProjectsfromPaper(QString papertitle);
+    QStringList getProjectsfromBibkey(QString bibkey);
+
     QString getLastAuthor(QString str); //get last author on paper
     QString formatAuthorList(QString str); //format author list
     QString formatBibKey(QString auth, QString year, QString pg); //format bibtex key
@@ -66,6 +68,7 @@ private:
 
 
 public slots:
+    void headerClicked(QModelIndex ind);
     void newProject();  //Add a new project
     void newSubProject();  //Add a new sub project
     void newPaper();    //Add a new paper
