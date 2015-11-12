@@ -19,7 +19,7 @@ public:
     void setjournal(QString s){this->journal=s;};
     void setmonth(QString s){this->month=s;};
     void setnote(QString s){this->note=s;};
-    void setkey(QString s){this->key=s; qDebug()<<s;};
+    void setkey(QString s){this->key=s;};
     void setissue(QString s){this->issue=s;};
     void setpath(QString s){this->path=s;};
     void formatEntry();

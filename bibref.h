@@ -17,6 +17,7 @@ public:
     ~Bibref();
 
     void showRef(BibArticle article);
+    void showRef(BibArticle *article);
 
 private:
     Ui::Bibref *ui;

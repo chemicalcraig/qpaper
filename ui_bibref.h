@@ -50,7 +50,7 @@ public:
         buttonBox = new QDialogButtonBox(Bibref);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
-        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        buttonBox->setStandardButtons(QDialogButtonBox::Ok);
 
         verticalLayout->addWidget(buttonBox);
 

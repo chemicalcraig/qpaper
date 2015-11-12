@@ -132,11 +132,11 @@ void MainWindow::viewBib() {
 
     query.exec("SELECT * from "+currentprojectname+"papers where bibkey like '"+currentpaperkey+"'" );
 
-    BibArticle article;
+    BibArticle *article;
     while (query.next()) {
         if (currentprojectname!="all") {
             QString s = getJournal(query.value(3).toString(),&res);
-            article.setEntries(query.value(0).toString(),
+            article = new BibArticle(query.value(0).toString(),
                                  query.value(1).toString(),
                                  query.value(2).toString(),
                                  s,
@@ -148,7 +148,7 @@ void MainWindow::viewBib() {
                                  query.value(9).toString());
         } else {
             QString s = getJournal(query.value(7).toString(),&res);
-            article.setEntries(query.value(3).toString(),
+            article = new BibArticle(query.value(3).toString(),
                                  query.value(4).toString(),
                                  query.value(6).toString(),
                                  s,
@@ -159,9 +159,9 @@ void MainWindow::viewBib() {
                                  query.value(13).toString(),
                                  query.value(14).toString());
         }
+        res.close();
+        article->formatEntry();
     }
-    res.close();
-    article.formatEntry();
     bib->showRef(article);
     int result = bib->exec();
 }
@@ -301,10 +301,10 @@ QString MainWindow::getJournal(QString j, QFile *res) {
 
 /* print project bibtex */
 void MainWindow::printProjectBibtex() {
-    QString title,authors,journal,volume,pages,issue,year,notes,lastauthor,bkey;
     ofstream outfile;
     QString bibfilestring = QFileDialog::getSaveFileName (this,
-                                                         tr("Export Bib file"), "", tr("Bib Files (*.bib)"));//currentprojectname;
+                                                          tr("Export Bib file"), "",
+                                                          tr("Bib Files (*.bib)"));//currentprojectname;
     if (!bibfilestring.endsWith(".bib"))
         bibfilestring+=".bib";
     outfile.open(bibfilestring.toUtf8().constData() );
@@ -314,51 +314,37 @@ void MainWindow::printProjectBibtex() {
     /* first the journal strings */
     QFile res("Journal_strings.txt");
     res.open(QIODevice::ReadOnly|QIODevice::Text);
-    QTextStream tstr(&res);
-    QByteArray ar;// = res.readAll();
+    QByteArray ar;
     QFile res2(bibfilestring);
     res2.remove();
     res2.open(QIODevice::WriteOnly|QIODevice::Text);
-   // res2.write(ar);
     /* Now the papers */
     QSqlQuery query;
     query.exec("SELECT * from '"+currentprojectname+"papers'" );
+    int count=0;
+    while(query.next()) {
+        count++;
+    }
+    BibArticle *article = new BibArticle[count];
 
+    query.exec("SELECT * from '"+currentprojectname+"papers'" );
+    int i=0;
     while (query.next()) {
-        /* get last author's last name */
-        lastauthor = getLastAuthor(query.value(2).toString());
-        //*  title
-        title = query.value(1).toString();
-        //*  authors
-        authors = formatAuthorList(query.value(2).toString());
-        //*  journal
-        journal = query.value(3).toString();
-        QString s = getJournal(journal,&res);
+        QString s = getJournal(query.value(3).toString(),&res);
+        article[i].setEntries(query.value(0).toString(),
+                                 query.value(1).toString(),
+                                 query.value(2).toString(),
+                                 s,
+                                 query.value(4).toString(),
+                                 query.value(5).toString(),
+                                 query.value(6).toString(),
+                                 query.value(7).toString(),
+                                 query.value(8).toString(),
+                                 query.value(9).toString());
+        article[i].formatEntry();
+        ar+=article[i].bibEntry;
 
-        //*  volume
-        volume = query.value(4).toString();
-        //*  pages
-        pages = query.value(5).toString();
-        //*  issue
-        issue = query.value(6).toString();
-        //*  year
-        year = query.value(7).toString();
-        //*  notes
-        notes = query.value(8).toString();
-
-        /* Format Bibtex key */
-        bkey = query.value(0).toString();//formatBibKey(lastauthor,year,pages);
-        /* Write things to the file */
-        //ar.clear();
-        ar+="\n";
-        ar+="@article{"+bkey+",\n";
-        ar+="  Author = {"+authors+"},\n";
-        ar+="  Journal = {"+s+"},\n";
-        ar+="  Number = {"+issue+"},\n";
-        ar+="  Pages = {"+pages+"},\n";
-        ar+="  Title = {"+title+"},\n";
-        ar+="  Volume = {"+volume+"},\n";
-        ar+="  Year = {"+year+"}}\n";
+        i++;
     }
     res2.write(ar);
     res2.close();
@@ -743,7 +729,7 @@ void MainWindow::deleteProject() {
     }
     query.exec("DELETE FROM projects WHERE id="+QString::number(currentprojectId ));
     query.exec("DELETE FROM projects WHERE parentid="+QString::number(currentprojectId ));
-    nprojects --;
+    //nprojects --;
     delete[] mainProjects;
     dynamic_cast<QStandardItemModel*>(ui->treeView_projects->model())->clear();
     initializeProjectData();
@@ -794,21 +780,22 @@ void MainWindow::addProject(Projectdata proj) {
 /* Initialize Project Class */
 
 void MainWindow::initializeProjectData() {
-
+qDebug()<<"hello";
     QSqlQuery query;
 
     //Get all project
     bool ok = query.exec("SELECT * from projects");
     int nrecords = 0;
-    nprojects = 0;
+    nprojects = 1;
     int i=0;
 
     //Get number of total projects (main + sub)
     while(query.next()) {
         i++;
 
-        nrecords = i;
+        nrecords = i+1;
     }
+    qDebug()<<"There are "<<nrecords<<" projects";
 
     //if no records exist return
     if (nrecords < 1) {
@@ -822,6 +809,7 @@ void MainWindow::initializeProjectData() {
     query.first();
     this->nprojects = nrecords;
     mainProjects = new Projectdata[nrecords];
+    parentprojects=1;
     i=0;
 
     ok = query.exec("SELECT * from projects where isparent!='false'");
@@ -846,6 +834,8 @@ void MainWindow::initializeProjectData() {
         i++;
         parentprojects++;
     }
+    qDebug()<<"There are "<<parentprojects<<" parent projects";
+
 
     //Now insert the children
     query.exec("SELECT * FROM projects WHERE isparent='false'");
@@ -873,6 +863,7 @@ void MainWindow::initializeProjectData() {
 
     for (int j=0; j<i; j++) {
         projectNames<<mainProjects[j].name;
+        qDebug()<<"adding "<<mainProjects[j].name;
     }
 
     //Insert "All" item
@@ -924,10 +915,12 @@ void MainWindow::newProject() {
         query.first();
         dat.projectId = query.value(0).toInt();
         dat.item.setText(newproj->name);
+        qDebug()<<"there are "<<nprojects<<"projects 919";
+
         addProject(dat);
         currentprojectId = dat.projectId;
 
-
+        qDebug()<<"there are "<<nprojects<<"projects 921";
         //Add new project to View Model
         mainProjects[nprojects-1].item.setText(newproj->name);
 

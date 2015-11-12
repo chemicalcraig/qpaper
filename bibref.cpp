@@ -19,3 +19,9 @@ void Bibref::showRef(BibArticle article) {
     ui->plainTextEdit_bib->insertPlainText(s);
     ui->label_id->setText("Key: "+article.getkey());
 }
+void Bibref::showRef(BibArticle *article) {
+    QString s;
+    s.append(article->bibEntry);
+    ui->plainTextEdit_bib->insertPlainText(s);
+    ui->label_id->setText("Key: "+article->getkey());
+}
