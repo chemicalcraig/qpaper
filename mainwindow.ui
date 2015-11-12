@@ -162,8 +162,8 @@
      <property name="title">
       <string>New Project</string>
      </property>
-     <addaction name="actionNew_main_project"/>
-     <addaction name="actionSub_project"/>
+     <addaction name="actionMain"/>
+     <addaction name="actionSub"/>
     </widget>
     <widget class="QMenu" name="menuExport_bibtex">
      <property name="title">
@@ -199,8 +199,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionNew_Main_Project"/>
-   <addaction name="actionNew_Sub_Project"/>
    <addaction name="actionDelete_Project"/>
    <addaction name="separator"/>
    <addaction name="actionAdd_Paper"/>
@@ -226,26 +224,6 @@
    </property>
    <property name="toolTip">
     <string>Add a new paper to the current project</string>
-   </property>
-  </action>
-  <action name="actionNew_main_project">
-   <property name="text">
-    <string>Main project</string>
-   </property>
-  </action>
-  <action name="actionSub_project">
-   <property name="text">
-    <string>Sub project</string>
-   </property>
-  </action>
-  <action name="actionNew_Main_Project">
-   <property name="text">
-    <string>New Main Project</string>
-   </property>
-  </action>
-  <action name="actionNew_Sub_Project">
-   <property name="text">
-    <string>New Sub Project</string>
    </property>
   </action>
   <action name="actionDelete_Project">
@@ -291,6 +269,16 @@
   <action name="actionBibTeX_entry">
    <property name="text">
     <string>BibTeX entry</string>
+   </property>
+  </action>
+  <action name="actionMain">
+   <property name="text">
+    <string>Main</string>
+   </property>
+  </action>
+  <action name="actionSub">
+   <property name="text">
+    <string>Sub</string>
    </property>
   </action>
  </widget>

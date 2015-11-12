@@ -44,6 +44,7 @@ public:
 
         plainTextEdit_bib = new QPlainTextEdit(Bibref);
         plainTextEdit_bib->setObjectName(QString::fromUtf8("plainTextEdit_bib"));
+        plainTextEdit_bib->setReadOnly(true);
 
         verticalLayout->addWidget(plainTextEdit_bib);
 

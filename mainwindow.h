@@ -93,6 +93,7 @@ public slots:
     void showJournalAbbv(); //show journal abbreviations
     void openPaper(); //open paper w/ external program
     void editPaper(); //edit paper entry w/ form
+    void editPaper(QModelIndex);
     void viewBib(); //view single paper bib entry
 
 };

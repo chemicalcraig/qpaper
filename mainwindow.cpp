@@ -11,10 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Connections
     //New projects
-    connect(ui->actionNew_main_project, SIGNAL(triggered()), this, SLOT(newProject()));
-    connect(ui->actionSub_project, SIGNAL(triggered()),this,SLOT(newSubProject()));
-    connect(ui->actionNew_Main_Project, SIGNAL(triggered()), this, SLOT(newProject()));
-    connect(ui->actionNew_Sub_Project, SIGNAL(triggered()),this,SLOT(newSubProject()));
+    connect(ui->actionMain, SIGNAL(triggered()), this, SLOT(newProject()));
+    connect(ui->actionSub, SIGNAL(triggered()),this,SLOT(newSubProject()));
 
     //Change current project
     connect(ui->treeView_projects, SIGNAL(clicked(QModelIndex)), this, SLOT(projectClicked(QModelIndex)));
@@ -68,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QStandardItemModel *projmodel;
     projmodel = new QStandardItemModel ;
     papermodel = new QSqlTableModel;
-    papermodel->setEditStrategy(QSqlTableModel::OnManualSubmit );
+    //papermodel->setEditStrategy(QSqlTableModel::OnManualSubmit );
     projectmodel = new QSqlTableModel;
     //papermodel->setTable("allpapers");
     projectmodel->setTable("projects");
@@ -103,10 +101,12 @@ MainWindow::MainWindow(QWidget *parent) :
     paperSet = false;
 
     //Show all papers
-    //setProjectAll();
+    setProjectAll();
 
     //connect paper model
-    connect(papermodel,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(paperDataChanged(QModelIndex,QModelIndex)));
+    //connect(papermodel,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(paperDataChanged(QModelIndex,QModelIndex)));
+    //connect double click on paper to edit
+    connect(ui->tableView_papers,SIGNAL(doubleClicked(QModelIndex)), this, SLOT(editPaper(QModelIndex)));
 
     //Show Journal abbreviations
     connect(ui->actionJournals,SIGNAL(triggered()),this,SLOT(showJournalAbbv()));
@@ -170,6 +170,10 @@ void MainWindow::headerClicked(QModelIndex ind) {
 }
 
 /* Edit paper entry */
+void MainWindow::editPaper(QModelIndex ind) {
+    editPaper();
+}
+
 void MainWindow::editPaper() {
     QSqlQuery query;
     NewPaper *np = new NewPaper(this);
@@ -209,12 +213,12 @@ void MainWindow::editPaper() {
 
         if (currentprojectname == "all") {
             //get a list of all the projects the changed paper is a part of
-            QSqlQuery query3;
+            //QSqlQuery query3;
             QStringList strlist;
-            query3.exec("select projectid from allpapers where bibkey='"+currentpaperkey+"'");
-            query3.first();
-            int id = query3.value(0).toInt();
-            strlist = getProjectsfromBibkey(currentpaperkey);
+            //query3.exec("select projectid from allpapers where bibkey='"+np->key+"'");
+            //query3.first();
+            //int id = query3.value(0).toInt();
+            strlist = getProjectsfromBibkey(np->key);
             bool ok;
             for (int i=0; i<strlist.length(); i++) {
                 currentprojectname=projectNames.at(strlist.at(i).toInt(&ok,10)-1);
@@ -230,10 +234,7 @@ void MainWindow::editPaper() {
                 query2.exec("Update '"+currentprojectname+"papers' set bibkey='"+np->key+"' where bibkey = '"+currentpaperkey+"'");
             }
             currentprojectname="all";
-            //query3.exec("Update allpapers SET projectid='"+strlist+"' where bibkey='"+str+"'");
-            //update each entry in each table
             setProjectAll();
-            //edit paper list
         } else {
             //update the allpapers db
             query2.exec("Update 'allpapers' set title='"+np->title+"' where bibkey = '"+currentpaperkey+"'");
@@ -780,7 +781,6 @@ void MainWindow::addProject(Projectdata proj) {
 /* Initialize Project Class */
 
 void MainWindow::initializeProjectData() {
-qDebug()<<"hello";
     QSqlQuery query;
 
     //Get all project
@@ -795,7 +795,6 @@ qDebug()<<"hello";
 
         nrecords = i+1;
     }
-    qDebug()<<"There are "<<nrecords<<" projects";
 
     //if no records exist return
     if (nrecords < 1) {
@@ -817,7 +816,6 @@ qDebug()<<"hello";
 
         //Fill out the parents first
         if (i==0 || nrecords == 1) {
-
             query.first();
         }
 
@@ -834,8 +832,6 @@ qDebug()<<"hello";
         i++;
         parentprojects++;
     }
-    qDebug()<<"There are "<<parentprojects<<" parent projects";
-
 
     //Now insert the children
     query.exec("SELECT * FROM projects WHERE isparent='false'");
@@ -863,7 +859,6 @@ qDebug()<<"hello";
 
     for (int j=0; j<i; j++) {
         projectNames<<mainProjects[j].name;
-        qDebug()<<"adding "<<mainProjects[j].name;
     }
 
     //Insert "All" item
@@ -915,12 +910,10 @@ void MainWindow::newProject() {
         query.first();
         dat.projectId = query.value(0).toInt();
         dat.item.setText(newproj->name);
-        qDebug()<<"there are "<<nprojects<<"projects 919";
 
         addProject(dat);
         currentprojectId = dat.projectId;
 
-        qDebug()<<"there are "<<nprojects<<"projects 921";
         //Add new project to View Model
         mainProjects[nprojects-1].item.setText(newproj->name);
 
@@ -1033,7 +1026,7 @@ void MainWindow::projectClicked(QModelIndex ind) {
         ui->comboBox_projects->clear();
         ui->comboBox_projects->insertItem(0,"<-- Select Paper to Add to Project '"+currentprojectname+"' -->");
         ui->comboBox_projects->addItems(allpaperkeys);
-        ui->actionNew_Sub_Project->setEnabled(true);
+        ui->actionSub->setEnabled(true);
         ui->actionDelete_Project->setEnabled(true);
 
         ui->tableView_papers->showColumn(0);
@@ -1111,7 +1104,7 @@ void MainWindow::projectClicked(QString str) {
         ui->comboBox_projects->clear();
         ui->comboBox_projects->insertItem(0,"<-- Select Paper to Add to Project '"+currentprojectname+"' -->");
         ui->comboBox_projects->addItems(allpaperkeys);
-        ui->actionNew_Sub_Project->setEnabled(true);
+        ui->actionSub->setEnabled(true);
         ui->actionDelete_Project->setEnabled(true);
 
         ui->tableView_papers->showColumn(0);
@@ -1166,7 +1159,7 @@ void MainWindow::setProjectAll() {
     currentprojectId = 0;
     ui->label_papers->setText("All Papers");
     ui->actionDelete_Project->setEnabled(false);
-    ui->actionNew_Sub_Project->setEnabled(false);
+    ui->actionSub->setEnabled(false);
     ui->comboBox_allpapers->setHidden(false);
     ui->comboBox_projects->setHidden(true);
 

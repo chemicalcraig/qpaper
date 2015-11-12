@@ -22,7 +22,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      22,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -52,6 +52,7 @@ static const uint qt_meta_data_MainWindow[] = {
      488,   11,   11,   11, 0x0a,
      500,   11,   11,   11, 0x0a,
      512,   11,   11,   11, 0x0a,
+     535,   11,   11,   11, 0x0a,
 
        0        // eod
 };
@@ -70,7 +71,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "addPapertoProjectfromBox(QString)\0"
     "ind1,ind2\0paperDataChanged(QModelIndex,QModelIndex)\0"
     "printProjectBibtex()\0showJournalAbbv()\0"
-    "openPaper()\0editPaper()\0viewBib()\0"
+    "openPaper()\0editPaper()\0editPaper(QModelIndex)\0"
+    "viewBib()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -100,7 +102,8 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 18: _t->showJournalAbbv(); break;
         case 19: _t->openPaper(); break;
         case 20: _t->editPaper(); break;
-        case 21: _t->viewBib(); break;
+        case 21: _t->editPaper((*reinterpret_cast< QModelIndex(*)>(_a[1]))); break;
+        case 22: _t->viewBib(); break;
         default: ;
         }
     }
@@ -138,9 +141,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 22)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 22;
+        _id -= 23;
     }
     return _id;
 }

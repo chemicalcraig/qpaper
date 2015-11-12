@@ -38,10 +38,6 @@ public:
     QAction *actionCurrent_project;
     QAction *actionAll_papers;
     QAction *actionAdd_Paper;
-    QAction *actionNew_main_project;
-    QAction *actionSub_project;
-    QAction *actionNew_Main_Project;
-    QAction *actionNew_Sub_Project;
     QAction *actionDelete_Project;
     QAction *actionRemove_Paper_From_Project;
     QAction *actionRemove_Paper_From_Database;
@@ -51,6 +47,8 @@ public:
     QAction *actionView;
     QAction *actionPaper;
     QAction *actionBibTeX_entry;
+    QAction *actionMain;
+    QAction *actionSub;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout;
@@ -87,14 +85,6 @@ public:
         actionAll_papers->setObjectName(QString::fromUtf8("actionAll_papers"));
         actionAdd_Paper = new QAction(MainWindow);
         actionAdd_Paper->setObjectName(QString::fromUtf8("actionAdd_Paper"));
-        actionNew_main_project = new QAction(MainWindow);
-        actionNew_main_project->setObjectName(QString::fromUtf8("actionNew_main_project"));
-        actionSub_project = new QAction(MainWindow);
-        actionSub_project->setObjectName(QString::fromUtf8("actionSub_project"));
-        actionNew_Main_Project = new QAction(MainWindow);
-        actionNew_Main_Project->setObjectName(QString::fromUtf8("actionNew_Main_Project"));
-        actionNew_Sub_Project = new QAction(MainWindow);
-        actionNew_Sub_Project->setObjectName(QString::fromUtf8("actionNew_Sub_Project"));
         actionDelete_Project = new QAction(MainWindow);
         actionDelete_Project->setObjectName(QString::fromUtf8("actionDelete_Project"));
         actionRemove_Paper_From_Project = new QAction(MainWindow);
@@ -113,6 +103,10 @@ public:
         actionPaper->setObjectName(QString::fromUtf8("actionPaper"));
         actionBibTeX_entry = new QAction(MainWindow);
         actionBibTeX_entry->setObjectName(QString::fromUtf8("actionBibTeX_entry"));
+        actionMain = new QAction(MainWindow);
+        actionMain->setObjectName(QString::fromUtf8("actionMain"));
+        actionSub = new QAction(MainWindow);
+        actionSub->setObjectName(QString::fromUtf8("actionSub"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -236,15 +230,13 @@ public:
         menuBar->addAction(menuView->menuAction());
         menuFile->addAction(menuNew_Project->menuAction());
         menuFile->addAction(menuExport_bibtex->menuAction());
-        menuNew_Project->addAction(actionNew_main_project);
-        menuNew_Project->addAction(actionSub_project);
+        menuNew_Project->addAction(actionMain);
+        menuNew_Project->addAction(actionSub);
         menuExport_bibtex->addAction(actionCurrent_project);
         menuExport_bibtex->addAction(actionAll_papers);
         menuBib_Tools->addAction(actionJournals);
         menuView->addAction(actionPaper);
         menuView->addAction(actionBibTeX_entry);
-        mainToolBar->addAction(actionNew_Main_Project);
-        mainToolBar->addAction(actionNew_Sub_Project);
         mainToolBar->addAction(actionDelete_Project);
         mainToolBar->addSeparator();
         mainToolBar->addAction(actionAdd_Paper);
@@ -267,10 +259,6 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionAdd_Paper->setToolTip(QApplication::translate("MainWindow", "Add a new paper to the current project", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
-        actionNew_main_project->setText(QApplication::translate("MainWindow", "Main project", 0, QApplication::UnicodeUTF8));
-        actionSub_project->setText(QApplication::translate("MainWindow", "Sub project", 0, QApplication::UnicodeUTF8));
-        actionNew_Main_Project->setText(QApplication::translate("MainWindow", "New Main Project", 0, QApplication::UnicodeUTF8));
-        actionNew_Sub_Project->setText(QApplication::translate("MainWindow", "New Sub Project", 0, QApplication::UnicodeUTF8));
         actionDelete_Project->setText(QApplication::translate("MainWindow", "Delete Project", 0, QApplication::UnicodeUTF8));
         actionRemove_Paper_From_Project->setText(QApplication::translate("MainWindow", "Remove Paper From Project", 0, QApplication::UnicodeUTF8));
         actionRemove_Paper_From_Database->setText(QApplication::translate("MainWindow", "Remove Paper From Database", 0, QApplication::UnicodeUTF8));
@@ -280,6 +268,8 @@ public:
         actionView->setText(QApplication::translate("MainWindow", "View", 0, QApplication::UnicodeUTF8));
         actionPaper->setText(QApplication::translate("MainWindow", "Paper", 0, QApplication::UnicodeUTF8));
         actionBibTeX_entry->setText(QApplication::translate("MainWindow", "BibTeX entry", 0, QApplication::UnicodeUTF8));
+        actionMain->setText(QApplication::translate("MainWindow", "Main", 0, QApplication::UnicodeUTF8));
+        actionSub->setText(QApplication::translate("MainWindow", "Sub", 0, QApplication::UnicodeUTF8));
         label_projects->setText(QApplication::translate("MainWindow", "Projects:", 0, QApplication::UnicodeUTF8));
         label_description->setText(QApplication::translate("MainWindow", "Description:", 0, QApplication::UnicodeUTF8));
         label_papers->setText(QApplication::translate("MainWindow", "Papers:", 0, QApplication::UnicodeUTF8));
