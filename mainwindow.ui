@@ -151,7 +151,7 @@
      <x>0</x>
      <y>0</y>
      <width>1205</width>
-     <height>25</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -181,8 +181,16 @@
     </property>
     <addaction name="actionJournals"/>
    </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionPaper"/>
+    <addaction name="actionBibTeX_entry"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuBib_Tools"/>
+   <addaction name="menuView"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -268,6 +276,21 @@
   <action name="actionView_Paper">
    <property name="text">
     <string>View Paper</string>
+   </property>
+  </action>
+  <action name="actionView">
+   <property name="text">
+    <string>View</string>
+   </property>
+  </action>
+  <action name="actionPaper">
+   <property name="text">
+    <string>Paper</string>
+   </property>
+  </action>
+  <action name="actionBibTeX_entry">
+   <property name="text">
+    <string>BibTeX entry</string>
    </property>
   </action>
  </widget>

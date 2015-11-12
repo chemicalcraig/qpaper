@@ -14,6 +14,8 @@
 #include "projectdata.h"
 #include "paperdata.h"
 #include "journals.h"
+#include "bibref.h"
+#include "bibarticle.h"
 using namespace std;
 
 class Projectdata;
@@ -90,7 +92,8 @@ public slots:
     void printProjectBibtex();  //print project bibtex
     void showJournalAbbv(); //show journal abbreviations
     void openPaper(); //open paper w/ external program
-    void editPaper();
+    void editPaper(); //edit paper entry w/ form
+    void viewBib(); //view single paper bib entry
 
 };
 

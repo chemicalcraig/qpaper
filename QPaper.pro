@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     newpaper.cpp \
     paperdata.cpp \
     journals.cpp \
-    addjournal.cpp
+    addjournal.cpp \
+    bibref.cpp \
+    bibarticle.cpp
 
 HEADERS  += mainwindow.h \
     newproject.h \
@@ -28,13 +30,16 @@ HEADERS  += mainwindow.h \
     newpaper.h \
     paperdata.h \
     journals.h \
-    addjournal.h
+    addjournal.h \
+    bibref.h \
+    bibarticle.h
 
 FORMS    += mainwindow.ui \
     newproject.ui \
     newpaper.ui \
     journals.ui \
-    addjournal.ui
+    addjournal.ui \
+    bibref.ui
 
 OTHER_FILES += \
     todo.txt \

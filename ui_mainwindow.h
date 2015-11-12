@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat Sep 27 22:17:23 2014
-**      by: Qt User Interface Compiler version 4.8.3
+** Created by: Qt User Interface Compiler version 4.8.6
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -49,6 +48,9 @@ public:
     QAction *actionJournals;
     QAction *actionEdit_Paper;
     QAction *actionView_Paper;
+    QAction *actionView;
+    QAction *actionPaper;
+    QAction *actionBibTeX_entry;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout;
@@ -70,6 +72,7 @@ public:
     QMenu *menuNew_Project;
     QMenu *menuExport_bibtex;
     QMenu *menuBib_Tools;
+    QMenu *menuView;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -104,6 +107,12 @@ public:
         actionEdit_Paper->setObjectName(QString::fromUtf8("actionEdit_Paper"));
         actionView_Paper = new QAction(MainWindow);
         actionView_Paper->setObjectName(QString::fromUtf8("actionView_Paper"));
+        actionView = new QAction(MainWindow);
+        actionView->setObjectName(QString::fromUtf8("actionView"));
+        actionPaper = new QAction(MainWindow);
+        actionPaper->setObjectName(QString::fromUtf8("actionPaper"));
+        actionBibTeX_entry = new QAction(MainWindow);
+        actionBibTeX_entry->setObjectName(QString::fromUtf8("actionBibTeX_entry"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
@@ -203,7 +212,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1205, 25));
+        menuBar->setGeometry(QRect(0, 0, 1205, 23));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         menuNew_Project = new QMenu(menuFile);
@@ -212,6 +221,8 @@ public:
         menuExport_bibtex->setObjectName(QString::fromUtf8("menuExport_bibtex"));
         menuBib_Tools = new QMenu(menuBar);
         menuBib_Tools->setObjectName(QString::fromUtf8("menuBib_Tools"));
+        menuView = new QMenu(menuBar);
+        menuView->setObjectName(QString::fromUtf8("menuView"));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -222,6 +233,7 @@ public:
 
         menuBar->addAction(menuFile->menuAction());
         menuBar->addAction(menuBib_Tools->menuAction());
+        menuBar->addAction(menuView->menuAction());
         menuFile->addAction(menuNew_Project->menuAction());
         menuFile->addAction(menuExport_bibtex->menuAction());
         menuNew_Project->addAction(actionNew_main_project);
@@ -229,6 +241,8 @@ public:
         menuExport_bibtex->addAction(actionCurrent_project);
         menuExport_bibtex->addAction(actionAll_papers);
         menuBib_Tools->addAction(actionJournals);
+        menuView->addAction(actionPaper);
+        menuView->addAction(actionBibTeX_entry);
         mainToolBar->addAction(actionNew_Main_Project);
         mainToolBar->addAction(actionNew_Sub_Project);
         mainToolBar->addAction(actionDelete_Project);
@@ -263,6 +277,9 @@ public:
         actionJournals->setText(QApplication::translate("MainWindow", "Journals", 0, QApplication::UnicodeUTF8));
         actionEdit_Paper->setText(QApplication::translate("MainWindow", "Edit Paper", 0, QApplication::UnicodeUTF8));
         actionView_Paper->setText(QApplication::translate("MainWindow", "View Paper", 0, QApplication::UnicodeUTF8));
+        actionView->setText(QApplication::translate("MainWindow", "View", 0, QApplication::UnicodeUTF8));
+        actionPaper->setText(QApplication::translate("MainWindow", "Paper", 0, QApplication::UnicodeUTF8));
+        actionBibTeX_entry->setText(QApplication::translate("MainWindow", "BibTeX entry", 0, QApplication::UnicodeUTF8));
         label_projects->setText(QApplication::translate("MainWindow", "Projects:", 0, QApplication::UnicodeUTF8));
         label_description->setText(QApplication::translate("MainWindow", "Description:", 0, QApplication::UnicodeUTF8));
         label_papers->setText(QApplication::translate("MainWindow", "Papers:", 0, QApplication::UnicodeUTF8));
@@ -271,6 +288,7 @@ public:
         menuNew_Project->setTitle(QApplication::translate("MainWindow", "New Project", 0, QApplication::UnicodeUTF8));
         menuExport_bibtex->setTitle(QApplication::translate("MainWindow", "Export bibtex", 0, QApplication::UnicodeUTF8));
         menuBib_Tools->setTitle(QApplication::translate("MainWindow", "Bib Tools", 0, QApplication::UnicodeUTF8));
+        menuView->setTitle(QApplication::translate("MainWindow", "View", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

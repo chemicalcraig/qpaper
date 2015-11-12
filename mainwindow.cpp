@@ -43,7 +43,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionEdit_Paper,SIGNAL(triggered()),this,SLOT(editPaper()));
 
     //View paper externally
-    connect(ui->actionView_Paper, SIGNAL(triggered()), this, SLOT(openPaper()));
+    connect(ui->actionView_Paper , SIGNAL(triggered()), this, SLOT(openPaper()));
+
+    //View single paper bib entry
+    connect(ui->actionBibTeX_entry, SIGNAL(triggered()), this, SLOT(viewBib()));
 
     //Set up databases
     db = QSqlDatabase::addDatabase("QSQLITE");
@@ -117,6 +120,51 @@ MainWindow::~MainWindow()
 /********************************************************
  *Functions
  ********************************************************/
+
+/* View single bib entry */
+void MainWindow::viewBib() {
+    if (!paperSet) return;
+
+    QSqlQuery query;
+    Bibref *bib = new Bibref(this);
+    QFile res("Journal_strings.txt");
+    res.open(QIODevice::ReadOnly|QIODevice::Text);
+
+    query.exec("SELECT * from "+currentprojectname+"papers where bibkey like '"+currentpaperkey+"'" );
+
+    BibArticle article;
+    while (query.next()) {
+        if (currentprojectname!="all") {
+            QString s = getJournal(query.value(3).toString(),&res);
+            article.setEntries(query.value(0).toString(),
+                                 query.value(1).toString(),
+                                 query.value(2).toString(),
+                                 s,
+                                 query.value(4).toString(),
+                                 query.value(5).toString(),
+                                 query.value(6).toString(),
+                                 query.value(7).toString(),
+                                 query.value(8).toString(),
+                                 query.value(9).toString());
+        } else {
+            QString s = getJournal(query.value(7).toString(),&res);
+            article.setEntries(query.value(3).toString(),
+                                 query.value(4).toString(),
+                                 query.value(6).toString(),
+                                 s,
+                                 query.value(8).toString(),
+                                 query.value(9).toString(),
+                                 query.value(10).toString(),
+                                 query.value(12).toString(),
+                                 query.value(13).toString(),
+                                 query.value(14).toString());
+        }
+    }
+    res.close();
+    article.formatEntry();
+    bib->showRef(article);
+    int result = bib->exec();
+}
 
 void MainWindow::headerClicked(QModelIndex ind) {
 }

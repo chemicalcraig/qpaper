@@ -1,8 +1,8 @@
 in select paper combo box
     have entries list as "title", author
 
-Export bibtex files
+Export bibtex files for single paper
 
 Join projects
 
-change all records when data changed for paper in all papers
+add entry for other bibtex categories, note, book, etc...
