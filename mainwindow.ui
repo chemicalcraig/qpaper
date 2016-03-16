@@ -151,7 +151,7 @@
      <x>0</x>
      <y>0</y>
      <width>1205</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -172,8 +172,22 @@
      <addaction name="actionCurrent_project"/>
      <addaction name="actionAll_papers"/>
     </widget>
+    <widget class="QMenu" name="menuRemove_Paper">
+     <property name="title">
+      <string>Remove Paper</string>
+     </property>
+     <addaction name="actionFrom_Project"/>
+     <addaction name="actionAll_Instances"/>
+    </widget>
     <addaction name="menuNew_Project"/>
+    <addaction name="actionDelete_Project_2"/>
+    <addaction name="separator"/>
+    <addaction name="actionNew_Paper"/>
+    <addaction name="menuRemove_Paper"/>
+    <addaction name="separator"/>
     <addaction name="menuExport_bibtex"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuBib_Tools">
     <property name="title">
@@ -188,7 +202,14 @@
     <addaction name="actionPaper"/>
     <addaction name="actionBibTeX_entry"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionEdit_Paper_2"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
    <addaction name="menuBib_Tools"/>
    <addaction name="menuView"/>
   </widget>
@@ -199,7 +220,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionDelete_Project"/>
    <addaction name="separator"/>
    <addaction name="actionAdd_Paper"/>
    <addaction name="actionRemove_Paper_From_Project"/>
@@ -279,6 +299,36 @@
   <action name="actionSub">
    <property name="text">
     <string>Sub</string>
+   </property>
+  </action>
+  <action name="actionDelete_Project_2">
+   <property name="text">
+    <string>Delete Project</string>
+   </property>
+  </action>
+  <action name="actionNew_Paper">
+   <property name="text">
+    <string>New Paper</string>
+   </property>
+  </action>
+  <action name="actionFrom_Project">
+   <property name="text">
+    <string>From Project</string>
+   </property>
+  </action>
+  <action name="actionAll_Instances">
+   <property name="text">
+    <string>All Instances</string>
+   </property>
+  </action>
+  <action name="actionEdit_Paper_2">
+   <property name="text">
+    <string>Paper</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>Exit</string>
    </property>
   </action>
  </widget>

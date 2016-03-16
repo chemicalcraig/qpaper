@@ -21,15 +21,33 @@ AddJournal::~AddJournal()
  ****************************/
 
 void AddJournal::okClicked() {
+    QStringList list;
 
-    QString str;
+    QString str,str2;
+    int lines;
 
     //format entry for bib file
     QFile res("Journal_strings.txt");
-        if (res.open(QIODevice::Append|QIODevice::Text)) {
-        str = "@string{"+ui->lineEdit->text()+"={"+ui->lineEdit_2->text()+"}}";
+    if (res.open(QIODevice::ReadOnly|QIODevice::Text)) {
+        int i=0;
         QTextStream ts(&res);
+        while (!ts.atEnd()) {
+            QString line = ts.readLine();
+            list += line;
+            qDebug()<<i<<" "<<list.at(i);
+            i++;
+        }
+        lines = i;
+    }
+    res.close();
+    if (res.open(QIODevice::WriteOnly|QIODevice::Text)) {
+        QTextStream ts(&res);
+        str = "@string{"+ui->lineEdit->text()+"={"+ui->lineEdit_2->text()+"}}";
+        for (int j=0; j<lines-1; j++){
+            ts<<list.at(j)<<"\n";
+        }
         ts<<str<<"\n";
+        ts<<"end"<<"\n";
     }
 
     //format entry for human readable txt file

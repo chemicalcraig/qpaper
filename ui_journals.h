@@ -11,17 +11,17 @@
 #define UI_JOURNALS_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QListWidget>
-#include <QtGui/QPushButton>
-#include <QtGui/QScrollArea>
-#include <QtGui/QVBoxLayout>
-#include <QtGui/QWidget>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QDialog>
+#include <QHeaderView>
+#include <QLabel>
+#include <QListWidget>
+#include <QPushButton>
+#include <QScrollArea>
+#include <QVBoxLayout>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -84,10 +84,10 @@ public:
 
     void retranslateUi(QDialog *Journals)
     {
-        Journals->setWindowTitle(QApplication::translate("Journals", "Dialog", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("Journals", "Journal Abbreviations", 0, QApplication::UnicodeUTF8));
-        pushButton_add->setText(QApplication::translate("Journals", "Add New Journal", 0, QApplication::UnicodeUTF8));
-        pushButton_select->setText(QApplication::translate("Journals", "Select Journal", 0, QApplication::UnicodeUTF8));
+        Journals->setWindowTitle(QApplication::translate("Journals", "Dialog", 0));
+        label->setText(QApplication::translate("Journals", "Journal Abbreviations", 0));
+        pushButton_add->setText(QApplication::translate("Journals", "Add New Journal", 0));
+        pushButton_select->setText(QApplication::translate("Journals", "Select Journal", 0));
     } // retranslateUi
 
 };

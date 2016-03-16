@@ -1,7 +1,8 @@
 in select paper combo box
     have entries list as "title", author
 
-Export bibtex files for single paper
+*Export bibtex files for single paper
+    Can view single paper entry and cut and paste
 
 Join projects
 

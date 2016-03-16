@@ -10,15 +10,15 @@
 #define UI_BIBREF_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QPlainTextEdit>
-#include <QtGui/QVBoxLayout>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QHeaderView>
+#include <QLabel>
+#include <QPlainTextEdit>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
@@ -65,8 +65,8 @@ public:
 
     void retranslateUi(QDialog *Bibref)
     {
-        Bibref->setWindowTitle(QApplication::translate("Bibref", "Dialog", 0, QApplication::UnicodeUTF8));
-        label_id->setText(QApplication::translate("Bibref", "ID:", 0, QApplication::UnicodeUTF8));
+        Bibref->setWindowTitle(QApplication::translate("Bibref", "Dialog", 0));
+        label_id->setText(QApplication::translate("Bibref", "ID:", 0));
     } // retranslateUi
 
 };

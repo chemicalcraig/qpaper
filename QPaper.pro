@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui \
+QT += core gui \
 QT += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     journals.cpp \
     addjournal.cpp \
     bibref.cpp \
-    bibarticle.cpp
+    bibarticle.cpp \
+    confirmdelete.cpp
 
 HEADERS  += mainwindow.h \
     newproject.h \
@@ -32,14 +33,16 @@ HEADERS  += mainwindow.h \
     journals.h \
     addjournal.h \
     bibref.h \
-    bibarticle.h
+    bibarticle.h \
+    confirmdelete.h
 
 FORMS    += mainwindow.ui \
     newproject.ui \
     newpaper.ui \
     journals.ui \
     addjournal.ui \
-    bibref.ui
+    bibref.ui \
+    confirmdelete.ui
 
 OTHER_FILES += \
     todo.txt \

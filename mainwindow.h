@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <Qt/QtSql>
-#include <Qt/qstandarditemmodel.h>
+#include <QtSql>
+#include <qstandarditemmodel.h>
 #include <QDebug>
 #include <iostream>
 #include <fstream>
@@ -16,6 +16,7 @@
 #include "journals.h"
 #include "bibref.h"
 #include "bibarticle.h"
+#include "confirmdelete.h"
 using namespace std;
 
 class Projectdata;
@@ -39,6 +40,7 @@ public:
     bool    isprojectchild;
     int     parentprojects;
     QString currentprojectname,currentpapername,currentpaperkey;
+    QList<int> projectIds;
     QStringList projectNames,allpapernames,allpaperkeys;
     QStandardItemModel mainprojectmodel;
 

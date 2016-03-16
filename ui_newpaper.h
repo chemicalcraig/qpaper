@@ -10,17 +10,17 @@
 #define UI_NEWPAPER_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QGridLayout>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPushButton>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QHeaderView>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 
@@ -207,19 +207,19 @@ public:
 
     void retranslateUi(QDialog *NewPaper)
     {
-        NewPaper->setWindowTitle(QApplication::translate("NewPaper", "Add a New Paper", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("NewPaper", "Authors (separated by ';'):", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QApplication::translate("NewPaper", "Volume:", 0, QApplication::UnicodeUTF8));
-        label_5->setText(QApplication::translate("NewPaper", "Issue:", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("NewPaper", "Title:", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("NewPaper", "Journal:", 0, QApplication::UnicodeUTF8));
-        pushButton->setText(QApplication::translate("NewPaper", "acronyms", 0, QApplication::UnicodeUTF8));
-        label_6->setText(QApplication::translate("NewPaper", "Pages:", 0, QApplication::UnicodeUTF8));
-        label_7->setText(QApplication::translate("NewPaper", "Year:", 0, QApplication::UnicodeUTF8));
-        label_9->setText(QApplication::translate("NewPaper", "Notes:", 0, QApplication::UnicodeUTF8));
-        label_8->setText(QApplication::translate("NewPaper", "Publisher:", 0, QApplication::UnicodeUTF8));
-        pushButton_addPdf->setText(QApplication::translate("NewPaper", "Add PDF", 0, QApplication::UnicodeUTF8));
-        label_10->setText(QApplication::translate("NewPaper", "BibTex Key:", 0, QApplication::UnicodeUTF8));
+        NewPaper->setWindowTitle(QApplication::translate("NewPaper", "Add a New Paper", 0));
+        label_2->setText(QApplication::translate("NewPaper", "Authors (separated by ';'):", 0));
+        label_4->setText(QApplication::translate("NewPaper", "Volume:", 0));
+        label_5->setText(QApplication::translate("NewPaper", "Issue:", 0));
+        label->setText(QApplication::translate("NewPaper", "Title:", 0));
+        label_3->setText(QApplication::translate("NewPaper", "Journal:", 0));
+        pushButton->setText(QApplication::translate("NewPaper", "acronyms", 0));
+        label_6->setText(QApplication::translate("NewPaper", "Pages:", 0));
+        label_7->setText(QApplication::translate("NewPaper", "Year:", 0));
+        label_9->setText(QApplication::translate("NewPaper", "Notes:", 0));
+        label_8->setText(QApplication::translate("NewPaper", "Publisher:", 0));
+        pushButton_addPdf->setText(QApplication::translate("NewPaper", "Add PDF", 0));
+        label_10->setText(QApplication::translate("NewPaper", "BibTex Key:", 0));
     } // retranslateUi
 
 };

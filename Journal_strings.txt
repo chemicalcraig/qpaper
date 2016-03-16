@@ -98,3 +98,12 @@
 @string{PPSC={Part. Part. Syst. Charact.}}
 @string{PE={Physica E}}
 @string{JTA={J. Thermal Anal.}}
+@string{ACSP={ACS Photonics}}
+@string{ACSN={ACS Nano}}
+@string{ASpec={Appl. Spectrosc.}}
+@string{OE={Opt. Express}}
+@string{JRS={J. Raman. Spectrosc.}}
+@string{SR={Sci. Rep.}}
+@string{NN={Nature Nanotech.}}
+@string{AOM={Adv. Opt. Mater.}}
+end

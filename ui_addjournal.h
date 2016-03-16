@@ -11,15 +11,15 @@
 #define UI_ADDJOURNAL_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QGridLayout>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QGridLayout>
+#include <QHeaderView>
+#include <QLabel>
+#include <QLineEdit>
 
 QT_BEGIN_NAMESPACE
 
@@ -77,9 +77,9 @@ public:
 
     void retranslateUi(QDialog *AddJournal)
     {
-        AddJournal->setWindowTitle(QApplication::translate("AddJournal", "Dialog", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("AddJournal", "Abbreviation:", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("AddJournal", "Accronym:", 0, QApplication::UnicodeUTF8));
+        AddJournal->setWindowTitle(QApplication::translate("AddJournal", "Dialog", 0));
+        label_2->setText(QApplication::translate("AddJournal", "Abbreviation:", 0));
+        label->setText(QApplication::translate("AddJournal", "Accronym:", 0));
     } // retranslateUi
 
 };

@@ -11,16 +11,16 @@
 #define UI_NEWPROJECT_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
-#include <QtGui/QDialogButtonBox>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPlainTextEdit>
-#include <QtGui/QVBoxLayout>
+#include <QAction>
+#include <QApplication>
+#include <QButtonGroup>
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QHeaderView>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPlainTextEdit>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 
@@ -78,9 +78,9 @@ public:
 
     void retranslateUi(QDialog *NewProject)
     {
-        NewProject->setWindowTitle(QApplication::translate("NewProject", "Dialog", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("NewProject", "Project Name:", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("NewProject", "Project Description:", 0, QApplication::UnicodeUTF8));
+        NewProject->setWindowTitle(QApplication::translate("NewProject", "Dialog", 0));
+        label->setText(QApplication::translate("NewProject", "Project Name (cannot contain spaces or special characters):", 0));
+        label_2->setText(QApplication::translate("NewProject", "Project Description:", 0));
     } // retranslateUi
 
 };
