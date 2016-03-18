@@ -1,14 +1,14 @@
 /****************************************************************************
-** Meta object code from reading C++ file 'newproject.h'
+** Meta object code from reading C++ file 'newbook.h'
 **
 ** Created by: The Qt Meta Object Compiler version 63 (Qt 4.8.6)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "newproject.h"
+#include "newbook.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
-#error "The header file 'newproject.h' doesn't include <QObject>."
+#error "The header file 'newbook.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
 #error "This file was generated using the moc from 4.8.6. It"
 #error "cannot be used with the include files from this version of Qt."
@@ -16,13 +16,13 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_NewProject[] = {
+static const uint qt_meta_data_NewBook[] = {
 
  // content:
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -30,65 +30,67 @@ static const uint qt_meta_data_NewProject[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      12,   11,   11,   11, 0x0a,
-      28,   24,   11,   11, 0x0a,
+       9,    8,    8,    8, 0x0a,
+      25,   21,    8,    8, 0x0a,
+      47,    8,    8,    8, 0x0a,
 
        0        // eod
 };
 
-static const char qt_meta_stringdata_NewProject[] = {
-    "NewProject\0\0okClicked()\0str\0"
-    "nameChanged(QString)\0"
+static const char qt_meta_stringdata_NewBook[] = {
+    "NewBook\0\0okClicked()\0str\0entryChanged(QString)\0"
+    "addPdf()\0"
 };
 
-void NewProject::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void NewBook::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
         Q_ASSERT(staticMetaObject.cast(_o));
-        NewProject *_t = static_cast<NewProject *>(_o);
+        NewBook *_t = static_cast<NewBook *>(_o);
         switch (_id) {
         case 0: _t->okClicked(); break;
-        case 1: _t->nameChanged((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 1: _t->entryChanged((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: _t->addPdf(); break;
         default: ;
         }
     }
 }
 
-const QMetaObjectExtraData NewProject::staticMetaObjectExtraData = {
+const QMetaObjectExtraData NewBook::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject NewProject::staticMetaObject = {
-    { &QDialog::staticMetaObject, qt_meta_stringdata_NewProject,
-      qt_meta_data_NewProject, &staticMetaObjectExtraData }
+const QMetaObject NewBook::staticMetaObject = {
+    { &QDialog::staticMetaObject, qt_meta_stringdata_NewBook,
+      qt_meta_data_NewBook, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &NewProject::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &NewBook::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *NewProject::metaObject() const
+const QMetaObject *NewBook::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *NewProject::qt_metacast(const char *_clname)
+void *NewBook::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_NewProject))
-        return static_cast<void*>(const_cast< NewProject*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_NewBook))
+        return static_cast<void*>(const_cast< NewBook*>(this));
     return QDialog::qt_metacast(_clname);
 }
 
-int NewProject::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int NewBook::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QDialog::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

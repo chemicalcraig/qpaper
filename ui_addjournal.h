@@ -1,8 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'addjournal.ui'
 **
-** Created: Tue Sep 30 22:18:14 2014
-**      by: Qt User Interface Compiler version 4.8.3
+** Created by: Qt User Interface Compiler version 4.8.6
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -11,15 +10,15 @@
 #define UI_ADDJOURNAL_H
 
 #include <QtCore/QVariant>
-#include <QAction>
-#include <QApplication>
-#include <QButtonGroup>
-#include <QDialog>
-#include <QDialogButtonBox>
-#include <QGridLayout>
-#include <QHeaderView>
-#include <QLabel>
-#include <QLineEdit>
+#include <QtGui/QAction>
+#include <QtGui/QApplication>
+#include <QtGui/QButtonGroup>
+#include <QtGui/QDialog>
+#include <QtGui/QDialogButtonBox>
+#include <QtGui/QGridLayout>
+#include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
 
 QT_BEGIN_NAMESPACE
 
@@ -31,13 +30,15 @@ public:
     QLineEdit *lineEdit_2;
     QLabel *label;
     QLineEdit *lineEdit;
+    QLabel *label_3;
+    QLineEdit *lineEdit_title;
     QDialogButtonBox *buttonBox;
 
     void setupUi(QDialog *AddJournal)
     {
         if (AddJournal->objectName().isEmpty())
             AddJournal->setObjectName(QString::fromUtf8("AddJournal"));
-        AddJournal->resize(320, 113);
+        AddJournal->resize(320, 144);
         gridLayout = new QGridLayout(AddJournal);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         label_2 = new QLabel(AddJournal);
@@ -60,12 +61,22 @@ public:
 
         gridLayout->addWidget(lineEdit, 1, 1, 1, 1);
 
+        label_3 = new QLabel(AddJournal);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        gridLayout->addWidget(label_3, 2, 0, 1, 1);
+
+        lineEdit_title = new QLineEdit(AddJournal);
+        lineEdit_title->setObjectName(QString::fromUtf8("lineEdit_title"));
+
+        gridLayout->addWidget(lineEdit_title, 2, 1, 1, 1);
+
         buttonBox = new QDialogButtonBox(AddJournal);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        gridLayout->addWidget(buttonBox, 2, 0, 1, 2);
+        gridLayout->addWidget(buttonBox, 3, 0, 1, 2);
 
 
         retranslateUi(AddJournal);
@@ -77,9 +88,10 @@ public:
 
     void retranslateUi(QDialog *AddJournal)
     {
-        AddJournal->setWindowTitle(QApplication::translate("AddJournal", "Dialog", 0));
-        label_2->setText(QApplication::translate("AddJournal", "Abbreviation:", 0));
-        label->setText(QApplication::translate("AddJournal", "Accronym:", 0));
+        AddJournal->setWindowTitle(QApplication::translate("AddJournal", "Dialog", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("AddJournal", "Abbreviation:", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("AddJournal", "Accronym:", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("AddJournal", "Full Title:", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

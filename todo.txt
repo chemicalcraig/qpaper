@@ -1,9 +1,20 @@
-in select paper combo box
+3/15/16
+
+? in select paper combo box
     have entries list as "title", author
 
 *Export bibtex files for single paper
-    Can view single paper entry and cut and paste
+    solution: Can view single paper entry and cut and paste
 
 Join projects
 
 add entry for other bibtex categories, note, book, etc...
+
+fix entries with ' in any field, i.e. Dal\'{i} does not work
+
+Projects with spaces in name
+    related to QSqlTableModel.select()
+
+shorten hyphenated last author's last name to latter name
+
+working on double clicking on book

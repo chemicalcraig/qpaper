@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     addjournal.cpp \
     bibref.cpp \
     bibarticle.cpp \
-    confirmdelete.cpp
+    confirmdelete.cpp \
+    newbook.cpp \
+    bookdata.cpp
 
 HEADERS  += mainwindow.h \
     newproject.h \
@@ -34,7 +36,9 @@ HEADERS  += mainwindow.h \
     addjournal.h \
     bibref.h \
     bibarticle.h \
-    confirmdelete.h
+    confirmdelete.h \
+    newbook.h \
+    bookdata.h
 
 FORMS    += mainwindow.ui \
     newproject.ui \
@@ -42,7 +46,8 @@ FORMS    += mainwindow.ui \
     journals.ui \
     addjournal.ui \
     bibref.ui \
-    confirmdelete.ui
+    confirmdelete.ui \
+    newbook.ui
 
 OTHER_FILES += \
     todo.txt \

@@ -13,6 +13,8 @@
 #include "newpaper.h"
 #include "projectdata.h"
 #include "paperdata.h"
+#include "bookdata.h"
+#include "newbook.h"
 #include "journals.h"
 #include "bibref.h"
 #include "bibarticle.h"
@@ -43,6 +45,8 @@ public:
     QList<int> projectIds;
     QStringList projectNames,allpapernames,allpaperkeys;
     QStandardItemModel mainprojectmodel;
+    QStringList allbooknames,allbookkeys;
+    QString whichView;
 
     //Main Project data wrapper
     Projectdata *mainProjects;
@@ -60,6 +64,7 @@ public:
     QString getJournal(QString j, QFile *res); //get journal abbreviation from accronym
 
     void paperAccepted(NewPaper *newpaper);
+    void bookAccepted(NewBook *newbook);
 
 
     
@@ -78,8 +83,10 @@ public slots:
     void newPaper();    //Add a new paper
     void projectClicked(QModelIndex ind); //Click on project name, sets to current project
     void projectClicked(QString str); //overloaded version of above
+    void projectClickedBooks(QString str);
     void deleteProject(); //delete project
-    void addNewPaper();
+    void addNewPaper(); //Add a new paper
+    void addNewBook(); //Add a new book
     void projectEntryChanged(); //change project name
     void paperClicked(QModelIndex ind); //clicked on paper
     void paperClicked(QModelIndex ind,bool mult); //clicked on paper
@@ -87,7 +94,6 @@ public slots:
     void removePaperfromProject(); //Remove paper
     void deletePaper(); //Delete paper from db
     void addPaperstoProject(int nproj);
-    //void addPapertoProject(int n); //Add paper to project from combobox_allpapers
     void addPapertoProject(int n,QString str); //Add paper to project from combobox_allpapers
     void addPapertoProjectfromBox(QString str); //Add paper to project from combobox_projects
     void paperDataChanged(QModelIndex ind1, QModelIndex ind2); //paper entry changed in table view
@@ -97,6 +103,7 @@ public slots:
     void editPaper(); //edit paper entry w/ form
     void editPaper(QModelIndex);
     void viewBib(); //view single paper bib entry
+    void switchView(); //switch between book and paper view
 
 };
 

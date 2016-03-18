@@ -22,6 +22,7 @@ private:
 
 public slots:
     void okClicked();
+    void nameChanged(QString str);
 };
 
 #endif // NEWPROJECT_H

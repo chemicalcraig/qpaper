@@ -21,11 +21,11 @@
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
+#include <QtGui/QPushButton>
 #include <QtGui/QSpacerItem>
 #include <QtGui/QStatusBar>
 #include <QtGui/QTableView>
 #include <QtGui/QTextEdit>
-#include <QtGui/QToolBar>
 #include <QtGui/QTreeView>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
@@ -56,7 +56,15 @@ public:
     QAction *actionEdit_Paper_2;
     QAction *actionExit;
     QWidget *centralWidget;
-    QVBoxLayout *verticalLayout_3;
+    QGridLayout *gridLayout_2;
+    QHBoxLayout *horizontalLayout_2;
+    QPushButton *pushButton_newproject;
+    QPushButton *pushButton_newpaper;
+    QPushButton *pushButton_book;
+    QPushButton *pushButton_editpaper;
+    QPushButton *pushButton_viewpdf;
+    QPushButton *pushButton_bibentry;
+    QPushButton *pushButton_exportprojectbib;
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout;
     QLabel *label_projects;
@@ -66,11 +74,12 @@ public:
     QTextEdit *textEdit_projdescription;
     QGridLayout *gridLayout;
     QComboBox *comboBox_allpapers;
+    QPushButton *pushButton_switch;
+    QLabel *label;
     QTableView *tableView_papers;
     QTextEdit *textEdit_paperNotes;
     QComboBox *comboBox_projects;
     QLabel *label_papers;
-    QLabel *label;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QMenu *menuNew_Project;
@@ -79,7 +88,6 @@ public:
     QMenu *menuBib_Tools;
     QMenu *menuView;
     QMenu *menuEdit;
-    QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -134,10 +142,51 @@ public:
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(centralWidget->sizePolicy().hasHeightForWidth());
         centralWidget->setSizePolicy(sizePolicy);
-        verticalLayout_3 = new QVBoxLayout(centralWidget);
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
+        gridLayout_2 = new QGridLayout(centralWidget);
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QString::fromUtf8("gridLayout_2"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setSpacing(6);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        pushButton_newproject = new QPushButton(centralWidget);
+        pushButton_newproject->setObjectName(QString::fromUtf8("pushButton_newproject"));
+
+        horizontalLayout_2->addWidget(pushButton_newproject);
+
+        pushButton_newpaper = new QPushButton(centralWidget);
+        pushButton_newpaper->setObjectName(QString::fromUtf8("pushButton_newpaper"));
+
+        horizontalLayout_2->addWidget(pushButton_newpaper);
+
+        pushButton_book = new QPushButton(centralWidget);
+        pushButton_book->setObjectName(QString::fromUtf8("pushButton_book"));
+
+        horizontalLayout_2->addWidget(pushButton_book);
+
+        pushButton_editpaper = new QPushButton(centralWidget);
+        pushButton_editpaper->setObjectName(QString::fromUtf8("pushButton_editpaper"));
+
+        horizontalLayout_2->addWidget(pushButton_editpaper);
+
+        pushButton_viewpdf = new QPushButton(centralWidget);
+        pushButton_viewpdf->setObjectName(QString::fromUtf8("pushButton_viewpdf"));
+
+        horizontalLayout_2->addWidget(pushButton_viewpdf);
+
+        pushButton_bibentry = new QPushButton(centralWidget);
+        pushButton_bibentry->setObjectName(QString::fromUtf8("pushButton_bibentry"));
+
+        horizontalLayout_2->addWidget(pushButton_bibentry);
+
+        pushButton_exportprojectbib = new QPushButton(centralWidget);
+        pushButton_exportprojectbib->setObjectName(QString::fromUtf8("pushButton_exportprojectbib"));
+
+        horizontalLayout_2->addWidget(pushButton_exportprojectbib);
+
+
+        gridLayout_2->addLayout(horizontalLayout_2, 0, 0, 1, 1);
+
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -191,6 +240,16 @@ public:
 
         gridLayout->addWidget(comboBox_allpapers, 1, 0, 1, 1);
 
+        pushButton_switch = new QPushButton(centralWidget);
+        pushButton_switch->setObjectName(QString::fromUtf8("pushButton_switch"));
+
+        gridLayout->addWidget(pushButton_switch, 5, 0, 1, 1);
+
+        label = new QLabel(centralWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        gridLayout->addWidget(label, 6, 0, 1, 1);
+
         tableView_papers = new QTableView(centralWidget);
         tableView_papers->setObjectName(QString::fromUtf8("tableView_papers"));
 
@@ -200,7 +259,7 @@ public:
         textEdit_paperNotes->setObjectName(QString::fromUtf8("textEdit_paperNotes"));
         textEdit_paperNotes->setMaximumSize(QSize(16777215, 100));
 
-        gridLayout->addWidget(textEdit_paperNotes, 6, 0, 1, 1);
+        gridLayout->addWidget(textEdit_paperNotes, 7, 0, 1, 1);
 
         comboBox_projects = new QComboBox(centralWidget);
         comboBox_projects->setObjectName(QString::fromUtf8("comboBox_projects"));
@@ -212,16 +271,11 @@ public:
 
         gridLayout->addWidget(label_papers, 0, 0, 1, 1);
 
-        label = new QLabel(centralWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-
-        gridLayout->addWidget(label, 5, 0, 1, 1);
-
 
         horizontalLayout->addLayout(gridLayout);
 
 
-        verticalLayout_3->addLayout(horizontalLayout);
+        gridLayout_2->addLayout(horizontalLayout, 1, 0, 1, 1);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -242,9 +296,6 @@ public:
         menuEdit = new QMenu(menuBar);
         menuEdit->setObjectName(QString::fromUtf8("menuEdit"));
         MainWindow->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(MainWindow);
-        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-        MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
@@ -272,12 +323,6 @@ public:
         menuView->addAction(actionPaper);
         menuView->addAction(actionBibTeX_entry);
         menuEdit->addAction(actionEdit_Paper_2);
-        mainToolBar->addSeparator();
-        mainToolBar->addAction(actionAdd_Paper);
-        mainToolBar->addAction(actionRemove_Paper_From_Project);
-        mainToolBar->addAction(actionRemove_Paper_From_Database);
-        mainToolBar->addAction(actionEdit_Paper);
-        mainToolBar->addAction(actionView_Paper);
 
         retranslateUi(MainWindow);
 
@@ -310,10 +355,18 @@ public:
         actionAll_Instances->setText(QApplication::translate("MainWindow", "All Instances", 0, QApplication::UnicodeUTF8));
         actionEdit_Paper_2->setText(QApplication::translate("MainWindow", "Paper", 0, QApplication::UnicodeUTF8));
         actionExit->setText(QApplication::translate("MainWindow", "Exit", 0, QApplication::UnicodeUTF8));
+        pushButton_newproject->setText(QApplication::translate("MainWindow", "Add New Project", 0, QApplication::UnicodeUTF8));
+        pushButton_newpaper->setText(QApplication::translate("MainWindow", "Add New Paper", 0, QApplication::UnicodeUTF8));
+        pushButton_book->setText(QApplication::translate("MainWindow", "Add New Book/Chapter", 0, QApplication::UnicodeUTF8));
+        pushButton_editpaper->setText(QApplication::translate("MainWindow", "Edit Paper", 0, QApplication::UnicodeUTF8));
+        pushButton_viewpdf->setText(QApplication::translate("MainWindow", "View PDF", 0, QApplication::UnicodeUTF8));
+        pushButton_bibentry->setText(QApplication::translate("MainWindow", "View bib Entry", 0, QApplication::UnicodeUTF8));
+        pushButton_exportprojectbib->setText(QApplication::translate("MainWindow", "Export Project .bib", 0, QApplication::UnicodeUTF8));
         label_projects->setText(QApplication::translate("MainWindow", "Projects:", 0, QApplication::UnicodeUTF8));
         label_description->setText(QApplication::translate("MainWindow", "Description:", 0, QApplication::UnicodeUTF8));
+        pushButton_switch->setText(QApplication::translate("MainWindow", "View Books", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("MainWindow", "Notes:", 0, QApplication::UnicodeUTF8));
         label_papers->setText(QApplication::translate("MainWindow", "Papers:", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("MainWindow", "Paper Notes:", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0, QApplication::UnicodeUTF8));
         menuNew_Project->setTitle(QApplication::translate("MainWindow", "New Project", 0, QApplication::UnicodeUTF8));
         menuExport_bibtex->setTitle(QApplication::translate("MainWindow", "Export bibtex", 0, QApplication::UnicodeUTF8));

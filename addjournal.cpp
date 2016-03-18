@@ -30,34 +30,61 @@ void AddJournal::okClicked() {
     QFile res("Journal_strings.txt");
     if (res.open(QIODevice::ReadOnly|QIODevice::Text)) {
         int i=0;
+        //Get number of lines in file and store all entries for sorting
         QTextStream ts(&res);
         while (!ts.atEnd()) {
             QString line = ts.readLine();
-            list += line;
-            qDebug()<<i<<" "<<list.at(i);
+            if (line != "end") {
+                list += line;
+            }
             i++;
         }
+        //format and add name of new journal to list
+        str = "@string{"+ui->lineEdit->text()+"={"+ui->lineEdit_2->text()+"}}";
+        list += str;
+        //sort list
+        list.sort();
+        //add end
+        list += "end";
         lines = i;
     }
     res.close();
     if (res.open(QIODevice::WriteOnly|QIODevice::Text)) {
         QTextStream ts(&res);
-        str = "@string{"+ui->lineEdit->text()+"={"+ui->lineEdit_2->text()+"}}";
-        for (int j=0; j<lines-1; j++){
+        for (int j=0; j<list.length(); j++){
             ts<<list.at(j)<<"\n";
         }
-        ts<<str<<"\n";
-        ts<<"end"<<"\n";
     }
+    res.close();
+
 
     //format entry for human readable txt file
+    list.clear();
     QFile res2("Journals_readable.txt");
-    if (res2.open(QIODevice::Append|QIODevice::Text)) {
-        str = ui->lineEdit->text()+" = "+ui->lineEdit_2->text();
-        QTextStream out(&res2);
-        out<<str<<"\n";
+    if (res2.open(QIODevice::ReadOnly|QIODevice::Text)) {
+        int i=0;
+        //Get number of lines in file and store all entries for sorting
+        QTextStream ts(&res2);
+        while (!ts.atEnd()) {
+            QString line = ts.readLine();
+            list += line;
+            i++;
+        }
+        //Add new formatted entry to list
+        if (ui->lineEdit_title->text().isEmpty())
+            str = ui->lineEdit->text()+" = "+ui->lineEdit_2->text();
+        else
+            str = ui->lineEdit->text()+" = "+ui->lineEdit_2->text()+", "+ui->lineEdit_title->text();
+        list += str;
+        //sort list
+        list.sort();
     }
+    res2.close();
 
-
-    //res2.write(str.toAscii());
+    if (res2.open(QIODevice::WriteOnly|QIODevice::Text)) {
+        QTextStream out(&res2);
+        for (int j=0; j<list.length(); j++)
+        out<<list.at(j)<<"\n";
+    }
+    res2.close();
 }

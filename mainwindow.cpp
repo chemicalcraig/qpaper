@@ -8,11 +8,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     nprojects = 0;
     parentprojects = 1;
+    whichView ="papers";
 
     //Connections
     //New projects
     connect(ui->actionMain, SIGNAL(triggered()), this, SLOT(newProject()));
     connect(ui->actionSub, SIGNAL(triggered()),this,SLOT(newSubProject()));
+    connect(ui->pushButton_newproject, SIGNAL(clicked()),this, SLOT(newProject()));
 
     //Change current project
     connect(ui->treeView_projects, SIGNAL(clicked(QModelIndex)), this, SLOT(projectClicked(QModelIndex)));
@@ -20,10 +22,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Delete project
     connect(ui->actionDelete_Project, SIGNAL(triggered()), this, SLOT(deleteProject()));
+    connect(ui->actionDelete_Project_2, SIGNAL(triggered()), this, SLOT(deleteProject()));
 
     //New paper
     connect(ui->actionAdd_Paper, SIGNAL(triggered()), this, SLOT(addNewPaper()));
     connect(ui->actionNew_Paper, SIGNAL(triggered()), this, SLOT(addNewPaper()));
+    connect(ui->pushButton_newpaper, SIGNAL(clicked()), this, SLOT(addNewPaper()));
+
+    //New Book/Chapter
+    connect(ui->pushButton_book, SIGNAL (clicked()), this, SLOT(addNewBook()));
 
     //Click on paper
     connect(ui->tableView_papers, SIGNAL(clicked(QModelIndex)), this, SLOT(paperClicked(QModelIndex)));
@@ -43,12 +50,28 @@ MainWindow::MainWindow(QWidget *parent) :
     //Edit paper
     connect(ui->actionEdit_Paper,SIGNAL(triggered()),this,SLOT(editPaper()));
     connect(ui->actionEdit_Paper_2,SIGNAL(triggered()),this,SLOT(editPaper()));
+    connect(ui->pushButton_editpaper, SIGNAL(clicked()), this, SLOT(editPaper()));
 
     //View paper externally
     connect(ui->actionView_Paper , SIGNAL(triggered()), this, SLOT(openPaper()));
+    connect(ui->pushButton_viewpdf, SIGNAL(clicked()), this, SLOT(openPaper()));
 
     //View single paper bib entry
     connect(ui->actionBibTeX_entry, SIGNAL(triggered()), this, SLOT(viewBib()));
+    connect(ui->pushButton_bibentry, SIGNAL(clicked()), this, SLOT(viewBib()));
+
+    //print project bibtex
+    connect(ui->actionCurrent_project, SIGNAL(triggered()), this, SLOT(printProjectBibtex()));
+    connect(ui->pushButton_exportprojectbib, SIGNAL(clicked()), this, SLOT(printProjectBibtex()));
+
+    //connect double click on paper to edit
+    connect(ui->tableView_papers,SIGNAL(doubleClicked(QModelIndex)), this, SLOT(editPaper(QModelIndex)));
+
+    //Show Journal abbreviations
+    connect(ui->actionJournals,SIGNAL(triggered()),this,SLOT(showJournalAbbv()));
+
+    //Switch paper/book view
+    connect(ui->pushButton_switch,SIGNAL(clicked()),this,SLOT(switchView()));
 
     //Exit
     connect(ui->actionExit, SIGNAL(triggered()), this, SLOT(close()));
@@ -57,7 +80,6 @@ MainWindow::MainWindow(QWidget *parent) :
     db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(QDir::currentPath()+"/papers.db");
     db.open();
-
 
     //Set up tables
     QSqlQuery query;
@@ -68,11 +90,20 @@ MainWindow::MainWindow(QWidget *parent) :
     query.exec("CREATE TABLE projects (id integer primary key, title varchar(100), description varchar(5000), isparent integer default 1, parentid integer, nchild integer)");
     query.exec(strquery);
 
+    //All books
+    strquery="CREATE TABLE allbooks (id integer primary key, nproject integer, projectid varchar(1000)";
+        strquery +=", bibkey varchar(20), btitle varchar(1000), chtitle varchar(1000), nauth integer, author varchar(1000)";
+        strquery +=", editor varchar(100)";
+        strquery +=",volume varchar(10),  issue varchar(20), edition varchar(20), series varchar(20), pages varchar(20)";
+        strquery += ", year varchar(4),publisher varchar(100),address varchar(100), notes varchar(5000), pdfpath varchar(5000))";
+    query.exec(strquery);
+
     //Set up Project and paper views
-    QSqlTableModel *papermodel, *projectmodel;
+    QSqlTableModel *papermodel, *projectmodel, *bookmodel;
     QStandardItemModel *projmodel;
     projmodel = new QStandardItemModel ;
     papermodel = new QSqlTableModel;
+    bookmodel = new QSqlTableModel;
     //papermodel->setEditStrategy(QSqlTableModel::OnManualSubmit );
     projectmodel = new QSqlTableModel;
     //papermodel->setTable("allpapers");
@@ -87,6 +118,9 @@ MainWindow::MainWindow(QWidget *parent) :
     initializePaperList();
     ui->treeView_projects->setModel(&mainprojectmodel);
     ui->tableView_papers->setSortingEnabled(true);
+    //ui->tableView_papers->horizontalHeader()->setResizeMode(QHeaderView::Interactive);
+    ui->tableView_papers->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    ui->tableView_papers->horizontalHeader()->resizeSections(QHeaderView::Stretch);
 //    ui->tableView_papers->horizontalHeader()->setHidden(false);
 //    ui->tableView_papers->hideColumn(0);
 //    ui->tableView_papers->hideColumn(1);
@@ -99,10 +133,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->comboBox_allpapers->setHidden(true);
     ui->comboBox_projects->setHidden(true);
 
-    //print project bibtex
-    connect(ui->actionCurrent_project, SIGNAL(triggered()), this, SLOT(printProjectBibtex()));
-
-
     //Set some parameters
     projectSet  = false;
     paperSet = false;
@@ -112,11 +142,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //connect paper model
     //connect(papermodel,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(paperDataChanged(QModelIndex,QModelIndex)));
-    //connect double click on paper to edit
-    connect(ui->tableView_papers,SIGNAL(doubleClicked(QModelIndex)), this, SLOT(editPaper(QModelIndex)));
 
-    //Show Journal abbreviations
-    connect(ui->actionJournals,SIGNAL(triggered()),this,SLOT(showJournalAbbv()));
+
+
 }
 
 MainWindow::~MainWindow()
@@ -127,6 +155,14 @@ MainWindow::~MainWindow()
 /********************************************************
  *Functions
  ********************************************************/
+/* Set to book view */
+void MainWindow::switchView() {
+    if (whichView == "papers") {
+        projectClickedBooks(currentprojectname);
+    } else if (whichView == "books") {
+        projectClicked(currentprojectname);
+    }
+}
 
 /* View single bib entry */
 void MainWindow::viewBib() {
@@ -143,9 +179,10 @@ void MainWindow::viewBib() {
     while (query.next()) {
         if (currentprojectname!="all") {
             QString s = getJournal(query.value(3).toString(),&res);
+            QString a = formatAuthorList(query.value(2).toString());
             article = new BibArticle(query.value(0).toString(),
                                  query.value(1).toString(),
-                                 query.value(2).toString(),
+                                 a,
                                  s,
                                  query.value(4).toString(),
                                  query.value(5).toString(),
@@ -155,9 +192,10 @@ void MainWindow::viewBib() {
                                  query.value(9).toString());
         } else {
             QString s = getJournal(query.value(7).toString(),&res);
+            QString a = formatAuthorList(query.value(6).toString());
             article = new BibArticle(query.value(3).toString(),
                                  query.value(4).toString(),
-                                 query.value(6).toString(),
+                                 a,
                                  s,
                                  query.value(8).toString(),
                                  query.value(9).toString(),
@@ -183,9 +221,25 @@ void MainWindow::editPaper(QModelIndex ind) {
 
 void MainWindow::editPaper() {
     QSqlQuery query;
-    NewPaper *np = new NewPaper(this);
 
+
+    if (whichView == "papers") {
+    NewPaper *np = new NewPaper(this);
     //Get the record from the current project and create a corresponding paper display window
+    query.exec("Select title, author, journal, volume, pages, issue, year, notes, pdfpath from '"+currentprojectname+"papers' where bibkey = '"+currentpaperkey+"'");
+    query.first();
+    if (query.value(0).toString().isEmpty() &&
+            query.value(1).toString().isEmpty() &&
+            query.value(2).toString().isEmpty() &&
+            query.value(3).toString().isEmpty() &&
+            query.value(4).toString().isEmpty() &&
+            query.value(5).toString().isEmpty() &&
+            query.value(6).toString().isEmpty() &&
+            query.value(7).toString().isEmpty() &&
+            query.value(8).toString().isEmpty()) {
+        //No entry, do nothing
+        return;
+    }
     query.exec("Select title, author, journal, volume, pages, issue, year, notes, pdfpath from '"+currentprojectname+"papers' where bibkey = '"+currentpaperkey+"'");
     while (query.next()) {
         np->setFields(currentpaperkey,query.value(0).toString(),query.value(1).toString(),
@@ -251,7 +305,6 @@ void MainWindow::editPaper() {
             //update the allpapers db
             query2.exec("Update 'allpapers' set title='"+np->title+"' where bibkey = '"+currentpaperkey+"'");
             query2.exec("Update 'allpapers' set author='"+np->authors+"' where bibkey = '"+currentpaperkey+"'");
-            qDebug()<<query2.lastQuery()<<query2.lastError();
             query2.exec("Update 'allpapers' set journal='"+np->journal+"' where bibkey = '"+currentpaperkey+"'");
             query2.exec("Update 'allpapers' set volume='"+np->volume+"' where bibkey = '"+currentpaperkey+"'");
             query2.exec("Update 'allpapers' set pages='"+np->pages+"' where bibkey = '"+currentpaperkey+"'");
@@ -264,9 +317,42 @@ void MainWindow::editPaper() {
 
             //now display
             projectClicked(currentprojectname);
-            qDebug()<<256;
         }
     }
+    }//end papers
+//    if (whichView == "books") {
+//        NewBook *np = new NewBook(this);
+//        //Get the record from the current project and create a corresponding paper display window
+//        query.exec("Select btitle, chtitle, author, editor, volume,issue,edition,series, pages, year,publisher,address, notes, pdfpath from '"+currentprojectname+"books' where bibkey = '"+currentpaperkey+"'");
+//        query.first();
+//        if (query.value(0).toString().isEmpty() &&
+//                query.value(1).toString().isEmpty() &&
+//                query.value(2).toString().isEmpty() &&
+//                query.value(3).toString().isEmpty() &&
+//                query.value(4).toString().isEmpty() &&
+//                query.value(5).toString().isEmpty() &&
+//                query.value(6).toString().isEmpty() &&
+//                query.value(7).toString().isEmpty() &&
+//                query.value(8).toString().isEmpty() &&
+//                query.value(9).toString().isEmpty() &&
+//                query.value(10).toString().isEmpty() &&
+//                query.value(11).toString().isEmpty() &&
+//                query.value(12).toString().isEmpty() &&
+//                query.value(13).toString().isEmpty()) {
+//            //No entry, do nothing
+//            return;
+//        }
+//        query.exec("Select Select btitle, chtitle, author, editor, volume,issue,edition,series, pages, year,publisher,address, notes, pdfpath from '"+currentprojectname+"books' where bibkey = '"+currentpaperkey+"'");
+//        while (query.next()) {
+//            np->setFields(currentpaperkey,query.value(0).toString(),query.value(1).toString(),
+//                          query.value(2).toString(),query.value(3).toString(),
+//                          query.value(4).toString(),query.value(5).toString(),
+//                          query.value(6).toString(),query.value(7).toString(),
+//                          query.value(8).toString());
+//        }
+
+//        int res = np->exec();
+//    }
 }
 
 /* Open paper externally */
@@ -446,8 +532,6 @@ QString MainWindow::getProjectsfromPaper(QString bibkey) {
 
     //Get rid of duplicates
     QStringList list = str.split(";");
-    //list = str.split(";");
-    //list = str.split(";");
     list.removeDuplicates();
 
     //str2.push_front(";");
@@ -468,8 +552,6 @@ QStringList MainWindow::getProjectsfromBibkey(QString bibkey) {
 
     //Get rid of duplicates
     QStringList list = str.split(";");
-    //list = str.split(";");
-    //list = str.split(";");
     list.removeDuplicates();
     list.removeAt(0);
     list.removeAll(QString::number(0));
@@ -518,8 +600,7 @@ void MainWindow::addPaperstoProject(int nproj) {
 void MainWindow::addPapertoProject(int n,QString proj) {
     if (n==0)
         return;
-    //QString str = ui->comboBox_allpapers->itemText(n);
-    //currentprojectname = str;
+
     QSqlQuery query;
     QString strlist;
     query.exec("SELECT id FROM projects WHERE title='"+proj+"'");
@@ -537,10 +618,6 @@ void MainWindow::addPapertoProject(int n,QString proj) {
 
     query.exec("DROP TABLE '"+proj+"papers'");
     query.exec("CREATE TABLE '"+proj+"papers' AS SELECT bibkey, title, author, journal, volume, pages, issue, year, notes, pdfpath from allpapers WHERE projectid like '%;"+QString::number(id)+";%'");
-//    dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->setTable(str+"papers");
-//    dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->select();
-
-    //projectClicked(str);
 
 }
 
@@ -656,6 +733,93 @@ QStringList MainWindow::parseAuthors(QString str) {
     return strlist;
 }
 
+/* Add a new book to the current project */
+void MainWindow::addNewBook() {
+
+    //if (!projectSet ) return;
+
+    NewBook *newbook = new NewBook(this);
+
+    int res = newbook->exec();
+
+    newbook->setFocusPolicy(Qt::StrongFocus);
+    newbook->setModal(Qt::WindowModal);
+
+    if (res == QDialog::Accepted)
+        bookAccepted(newbook);
+
+}
+
+/* Paper accepted, insert or update record */
+void MainWindow::bookAccepted(NewBook *newbook) {
+        BookData dat;
+        dat.key = newbook->key;
+        dat.btitle = newbook->btitle;
+        dat.chtitle = newbook->chtitle;
+        dat.authors = newbook->authors;
+        dat.editors = newbook->editors;
+        dat.volume = newbook->volume;
+        dat.issue = newbook->issue;
+        dat.series = newbook->series;
+        dat.edition = newbook->edition;
+        dat.year = newbook->year;
+        dat.notes = newbook->notes;
+        dat.publisher = newbook->publisher;
+        dat.address = newbook->address;
+        dat.pages = newbook->pages;
+        QStringList authlist = parseAuthors(dat.authors);
+
+        QSqlQuery query,query2;
+        query2.exec("SELECT id from allbooks where bibkey='"+dat.key+"'");
+        query2.first();
+        QString cid = query2.value(0).toString();
+        QString qstrquery = "INSERT OR REPLACE INTO allbooks (id, bibkey, btitle,chtitle, author,editor, volume,issue, edition,series,pages, year,publisher,address,notes,projectid,pdfpath) VALUES (:id, :bibkey, :btitle,:chtitle, :author,:editor, :volume,:issue,:edition,:series, :pages, :year,:publisher,:address, :notes,:projectid,:pdfpath)";
+        query.prepare(qstrquery);
+        query.bindValue(0,cid);
+        query.bindValue(1,dat.key);
+        query.bindValue(2,dat.btitle);
+        query.bindValue(3,dat.chtitle);
+        query.bindValue(4,dat.authors);
+        query.bindValue(5,dat.editors);
+        query.bindValue(6,dat.volume);
+        query.bindValue(7,dat.issue);
+        query.bindValue(8,dat.edition);
+        query.bindValue(9,dat.series);
+        query.bindValue(10,dat.pages);
+        query.bindValue(11,dat.year);
+        query.bindValue(12,dat.publisher);
+        query.bindValue(13,dat.address);
+        query.bindValue(14,dat.notes);
+        QString str = ";"+QString::number(currentprojectId)+";";
+        QString str2 = ";0;";
+        QString str3 = ";0;"+QString::number(currentprojectId)+";";
+        if (currentprojectname != "all") {
+            query.bindValue(15,str3 );
+        } else {
+            query.bindValue(15,str2);
+        }
+        query.bindValue(16,newbook->pdf);
+
+        query.exec();
+
+        if (currentprojectname != "all") {
+            query.exec("DROP TABLE '"+currentprojectname+"books'");
+            query.exec("CREATE TABLE '"+currentprojectname+"books' AS SELECT bibkey, btitle, chtitle, author, editor, volume, issue, edition, series, pages, year, publisher, address, notes, pdfpath from allbooks WHERE projectid like '%;"+QString::number(currentprojectId)+";%'");
+        }
+
+        //add paper to names list
+        allbooknames<<dat.chtitle;
+        allbookkeys<<dat.key;
+
+        //Update paper view
+        if (currentprojectname == "all") {
+            setProjectAll();
+            setProjectAll();
+        } else {
+            projectClicked(currentprojectname);
+        }
+}
+
 /* Add a new paper to the current project */
 void MainWindow::addNewPaper() {
 
@@ -717,14 +881,10 @@ void MainWindow::paperAccepted(NewPaper *newpaper) {
         query.exec();
 
         if (currentprojectname != "all") {
-//            dynamic_cast<QStandardItemModel*>(ui->tableView_papers->model())->clear();
-
-//            ui->tableView_papers->reset();
-//            dynamic_cast<QStandardItemModel*>(ui->tableView_papers->model())->clear();
-
             query.exec("DROP TABLE '"+currentprojectname+"papers'");
             query.exec("CREATE TABLE '"+currentprojectname+"papers' AS SELECT bibkey, title, author, journal, volume, pages, issue, year, notes, pdfpath from allpapers WHERE projectid like '%;"+QString::number(currentprojectId)+";%'");
         }
+
         //add paper to names list
         allpapernames<<dat.title;
         allpaperkeys<<dat.key;
@@ -1020,8 +1180,10 @@ void MainWindow::newSubProject() {
 /* Set current project */
 
 void MainWindow::projectClicked(QModelIndex ind) {
+
+    whichView = "papers";
+
     QString str = ind.data().toString();
-    qDebug()<<str;
 
     //If "All" clicked
     if (str == "all") {
@@ -1107,6 +1269,9 @@ void MainWindow::projectClicked(QModelIndex ind) {
     }
 }
 void MainWindow::projectClicked(QString str) {
+    qDebug()<<str;
+    whichView = "papers";
+
 
     //ui->actionAdd_Paper->setEnabled(false);
         projectSet = true;
@@ -1153,6 +1318,88 @@ void MainWindow::projectClicked(QString str) {
 
 
         QString str2 = str+"papers";
+        if (!db.tables().contains(str2)) {
+            for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
+                 ui->tableView_papers->setRowHidden(i,true );
+            dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->clear();
+            ui->tableView_papers->reset();
+            for (int i=0; i<15; i++)
+                ui->tableView_papers->hideColumn(i);
+
+        } else {
+            for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
+                 ui->tableView_papers->setRowHidden(i,true );
+            //dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->clear();
+            ui->tableView_papers->reset();
+
+
+            dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->setTable(str2);
+            dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->select();
+
+            for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
+                 ui->tableView_papers->setRowHidden(i,false );
+            for (int i=0; i<14; i++)
+                ui->tableView_papers->hideColumn(i);
+            ui->tableView_papers->showColumn(0);
+            ui->tableView_papers->showColumn(1);
+            ui->tableView_papers->showColumn(2);
+            ui->tableView_papers->showColumn(3);
+            ui->tableView_papers->showColumn(5);
+            ui->tableView_papers->showColumn(7);
+            ui->tableView_papers->showColumn(8);
+
+        }
+}
+
+/* Show Books */
+void MainWindow::projectClickedBooks(QString str) {
+    whichView = "books";
+
+    //ui->actionAdd_Paper->setEnabled(false);
+        projectSet = true;
+
+        //Get project name and set to current project
+        currentprojectname = str;
+
+        //Query 'projects' table to get current project id and set to current
+        QSqlQuery query;
+        query.exec("SELECT id FROM projects WHERE title='"+str+"'");
+        query.first();
+        currentprojectId = query.value(0).toInt();
+
+        //update labels
+        ui->label_papers->setText("Books for: "+str);
+
+        //update description
+        query.exec("SELECT description FROM projects WHERE title='"+str+"'");
+        query.first();
+
+        ui->textEdit_projdescription->setText(query.value(0).toString());
+
+        //Update book view
+
+        paperSet = false;
+        ui->textEdit_paperNotes->clear();
+        ui->comboBox_projects->setHidden(false);
+        ui->comboBox_allpapers->setHidden(true);
+        ui->comboBox_allpapers->setEnabled(false);
+        ui->comboBox_projects->clear();
+        ui->comboBox_projects->insertItem(0,"<-- Select Book to Add to Project '"+currentprojectname+"' -->");
+        ui->comboBox_projects->addItems(allbookkeys);
+        ui->actionSub->setEnabled(true);
+        ui->actionDelete_Project->setEnabled(true);
+
+        ui->tableView_papers->showColumn(0);
+        ui->tableView_papers->showColumn(1);
+        ui->tableView_papers->showColumn(2);
+        ui->tableView_papers->showColumn(3);
+        ui->tableView_papers->showColumn(5);
+        ui->tableView_papers->showColumn(7);
+        ui->tableView_papers->showColumn(8);
+//        ui->tableView_papers->reset();
+
+
+        QString str2 = str+"books";
         if (!db.tables().contains(str2)) {
             for (int i=0; i<dynamic_cast<QSqlTableModel*>(ui->tableView_papers->model())->rowCount(); i++)
                  ui->tableView_papers->setRowHidden(i,true );
