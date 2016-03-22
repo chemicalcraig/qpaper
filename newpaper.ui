@@ -166,7 +166,9 @@
   <tabstop>lineEdit_pages</tabstop>
   <tabstop>lineEdit_year</tabstop>
   <tabstop>lineEdit_publisher</tabstop>
+  <tabstop>plainTextEdit_notes</tabstop>
   <tabstop>pushButton_addPdf</tabstop>
+  <tabstop>lineEdit_key</tabstop>
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>

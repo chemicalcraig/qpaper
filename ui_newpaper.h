@@ -195,8 +195,10 @@ public:
         QWidget::setTabOrder(lineEdit_issue, lineEdit_pages);
         QWidget::setTabOrder(lineEdit_pages, lineEdit_year);
         QWidget::setTabOrder(lineEdit_year, lineEdit_publisher);
-        QWidget::setTabOrder(lineEdit_publisher, pushButton_addPdf);
-        QWidget::setTabOrder(pushButton_addPdf, buttonBox);
+        QWidget::setTabOrder(lineEdit_publisher, plainTextEdit_notes);
+        QWidget::setTabOrder(plainTextEdit_notes, pushButton_addPdf);
+        QWidget::setTabOrder(pushButton_addPdf, lineEdit_key);
+        QWidget::setTabOrder(lineEdit_key, buttonBox);
 
         retranslateUi(NewPaper);
         QObject::connect(buttonBox, SIGNAL(accepted()), NewPaper, SLOT(accept()));

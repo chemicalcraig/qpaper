@@ -2,6 +2,7 @@
 #include "QDebug"
 #include "QFile"
 #include "ui_journals.h"
+#include <QDir>
 
 Journals::Journals(QWidget *parent) :
     QDialog(parent),
@@ -42,7 +43,7 @@ void Journals::showJournals () {
     ui->listWidget_journallist->clear();
 
     /* Display journals */
-    QFile res("Journals_readable.txt");
+    QFile res(QDir::homePath()+"/.qpaper/Journals_readable.txt");
     res.open(QIODevice::ReadOnly|QIODevice::Text);
     QTextDocument *doc = new QTextDocument ;
     doc->setPlainText(res.readAll());

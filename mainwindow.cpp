@@ -78,7 +78,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //Set up databases
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName(QDir::currentPath()+"/papers.db");
+    QString dbdir = QDir::homePath()+"/.qpaper/papers.db";
+    db.setDatabaseName(dbdir);
     db.open();
 
     //Set up tables
@@ -170,7 +171,8 @@ void MainWindow::viewBib() {
 
     QSqlQuery query;
     Bibref *bib = new Bibref(this);
-    QFile res("Journal_strings.txt");
+
+    QFile res(QDir::homePath()+"/.qpaper/Journal_strings.txt");
     res.open(QIODevice::ReadOnly|QIODevice::Text);
 
     query.exec("SELECT * from "+currentprojectname+"papers where bibkey like '"+currentpaperkey+"'" );
@@ -420,7 +422,7 @@ void MainWindow::printProjectBibtex() {
     /* Write Journal Strings */
     /* Write paper entries */
     /* first the journal strings */
-    QFile res("Journal_strings.txt");
+    QFile res(QDir::homePath()+"/.qpaper/Journal_strings.txt");
     res.open(QIODevice::ReadOnly|QIODevice::Text);
     QByteArray ar;
     QFile res2(bibfilestring);

@@ -44,6 +44,7 @@ JMB = J. Mol. Biol., Journal of Molecular Biology
 JMC = J. Med. Chem., Journal of Medicinal Chemistry
 JMP = J. Math. Phys., Journal of Mathematical Physics
 JMS = J. Mol. Struct., Journal of Molecular Structure
+JMST = J. Mol. Struct. THEOCHEM, Journal of Molecular Structure: THEOCHEM
 JOC = J. Org. Chem., The Journal of Organic Chemistry
 JOSAB = J. Opt. Soc. Am. B, Journal of the Optical Society of America B
 JPB = J. Phys. B, Journal of Physics B: Atomic, Molecular and Optical Physics

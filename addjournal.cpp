@@ -1,5 +1,6 @@
 #include "addjournal.h"
 #include "ui_addjournal.h"
+#include <QDir>
 
 AddJournal::AddJournal(QWidget *parent) :
     QDialog(parent),
@@ -27,7 +28,7 @@ void AddJournal::okClicked() {
     int lines;
 
     //format entry for bib file
-    QFile res("Journal_strings.txt");
+    QFile res(QDir::homePath()+"/.qpaper/Journal_strings.txt");
     if (res.open(QIODevice::ReadOnly|QIODevice::Text)) {
         int i=0;
         //Get number of lines in file and store all entries for sorting
@@ -60,7 +61,7 @@ void AddJournal::okClicked() {
 
     //format entry for human readable txt file
     list.clear();
-    QFile res2("Journals_readable.txt");
+    QFile res2(QDir::homePath()+"/.qpaper/Journals_readable.txt");
     if (res2.open(QIODevice::ReadOnly|QIODevice::Text)) {
         int i=0;
         //Get number of lines in file and store all entries for sorting

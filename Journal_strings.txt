@@ -44,6 +44,7 @@
 @string{JMC={J. Med. Chem.}}
 @string{JMP={J. Math. Phys.}}
 @string{JMS={J. Mol. Struct.}}
+@string{JMST={J. Mol. Struct. THEOCHEM}}
 @string{JOC={J. Org. Chem.}}
 @string{JOSAB={J. Opt. Soc. Am. B}}
 @string{JPB={J. Phys. B}}

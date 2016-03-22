@@ -8,6 +8,7 @@ NewPaper::NewPaper(QWidget *parent) :
     ui->setupUi(this);
 
     connect(ui->buttonBox,SIGNAL(accepted()), this, SLOT(okClicked()));
+    connect(ui->pushButton,SIGNAL(clicked()), this, SLOT(showJournals()));
     connect(ui->lineEdit_authors, SIGNAL(textChanged(QString)), this, SLOT(entryChanged(QString)));
     connect(ui->lineEdit_year,SIGNAL(textChanged(QString)), this, SLOT(entryChanged(QString)));
     connect(ui->lineEdit_pages ,SIGNAL(textChanged(QString)), this, SLOT(entryChanged(QString)));
